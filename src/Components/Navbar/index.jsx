@@ -132,7 +132,18 @@ const Navbar = () => {
 
                 </div>
                 <div className="flex items-center">
-
+<div className="w-6 h-6 mr-7 relative flex justify-center items-center">
+            <Link to="/orders" className=" text-blue-700 m-auto rounded-md">
+              <AiOutlineShoppingCart className="text-red-600" size={23}
+              onClick={() => {
+                    document.title = 'Orders';
+                  }}
+              />
+              <span className="absolute right-0 -top-2 left-5  rounded-full border-3 border-amber-300  font-semibold text-red-600 w-6 h-6 flex justify-center items-center text-md">
+                12
+              </span>
+            </Link>
+          </div>
                     <div className="flex justify-between relative items-center">
                         <h1 className="mr-3 ml-1 max-lg:hidden">
                             | Hello, <span className="font-semibold">John</span>
