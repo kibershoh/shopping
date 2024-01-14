@@ -18,27 +18,6 @@ import userImg from '../../assets/me1.jpg'
 import styles from './style.module.scss'
 import MotionText from "../../Constants/Framer-Motions/ForNavbar/logo";
 
-
-
-// Components
-
-
-
-// const logo = (
-//     <div className={styles.logo}>
-//         {/* <Link to={'/'}>Xurmo</Link> */}
-//         <motion.h1
-
-//             whileHover={{ scale: 1.2 }}
-//         >
-//             Xurmo
-//         </motion.h1>
-//     </div>
-// )
-
-
-
-
 const Navbar = () => {
     // All States
     const [active, setActive] = useState(false)
@@ -71,9 +50,8 @@ const Navbar = () => {
     // Refs
     const ProfileRef = useRef(null);
 
+   
     //-----------useEffects()--------------//
-
-
     // For Navbar and Sidebar
     useEffect(() => {
         const handleClickOutside = (event) => {
