@@ -1,264 +1,258 @@
+//--------------- Library---------------//
+
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import clsx from "clsx";
+// -----------React-icons-----------//
+
 import { IoCaretUpSharp, } from "react-icons/io5";
-import { ImSearch } from "react-icons/im";
 import { HiMenuAlt1 } from "react-icons/hi";
 import { CgClose } from "react-icons/cg";
 import { FaUserAlt } from "react-icons/fa";
-import clsx from "clsx";
-import navLinks from "../../Constants/navbar";
 import { AiOutlineShoppingCart } from "react-icons/ai";
+
+//----------------Files---------------- //
+
+import navLinks from "../../Constants/navbar";
 import userImg from '../../assets/me1.jpg'
+import styles from './style.module.scss'
+import MotionText from "../../Constants/Framer-Motions/ForNavbar/logo";
+
+
+
+// Components
+
+
+
+// const logo = (
+//     <div className={styles.logo}>
+//         {/* <Link to={'/'}>Xurmo</Link> */}
+//         <motion.h1
+
+//             whileHover={{ scale: 1.2 }}
+//         >
+//             Xurmo
+//         </motion.h1>
+//     </div>
+// )
+
+
+
+
 const Navbar = () => {
-    const [sidebar, setSidebar] = useState(false);
-    const [profile, setProfile] = useState(false);
-    const [input, setInput] = useState(false);
-    const [toggle, setToggle] = useState(false);
+    // All States
+    const [active, setActive] = useState(false)
     const [scrolled, setScrolled] = useState(false);
-    const [active, setActive] = useState("");
+    const [show, setShow] = useState(false)
+    const [activeLink, setActiveLink] = useState('')
+    const [activeLink2, setActiveLink2] = useState('')
+    const [authLinks, setAuthLinks] = useState('')
 
-    //   Functions
-    const showSidebar = () => {
-        setSidebar(!sidebar);
-        console.log(sidebar);
-    };
+    // Functions//
 
-    const Profile = () => {
-        setProfile(!profile);
-    };
 
-    // Outside sidebar close || istalgan joyni bosilsa yopiladi.
-    const sidebarRef = useRef(null);
+    //  for Login and Register
+    const ProfileHandler = () => {
+        setActive(!active)
+    }
+
+    // for Sidebar
+    const showClick = () => {
+        setShow(!show)
+    }
+
+
+    // Active Link Handler
+    const activeLinkHandler = (title) => {
+        setActiveLink(title)
+        document.title = title
+    }
+
+    // Refs
+    const ProfileRef = useRef(null);
+
+    //-----------useEffects()--------------//
+
+
+    // For Navbar and Sidebar
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (
-                sidebarRef.current &&
-                !sidebarRef.current.contains(event.target)
+                ProfileRef.current &&
+                !ProfileRef.current.contains(event.target)
             ) {
-                setSidebar(false);
-                setInput(false);
-                setProfile(false);
+                setActive(false);
+                setShow(false);
             }
         };
+
         document.addEventListener("mousedown", handleClickOutside);
+
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
-        }
+        };
     })
 
-    // Navbar scrool height
+    // Scrolled
     useEffect(() => {
         const handleScroll = () => {
             const scrollTop = window.scrollY;
             if (scrollTop > 200) {
                 setScrolled(true);
-            } else {
-                setScrolled(false);
             }
-        }
+            else {
+                setScrolled(false)
+            }
+        };
+
         window.addEventListener("scroll", handleScroll);
+
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
+
+
+
+
+
+
+
+
     return (
+        <nav
+            ref={ProfileRef}
+            className={clsx(styles.header,
+                scrolled ? styles.scrolled : styles.unscrolled,
 
-
-
-        <div className="w-full fixed z-30" ref={sidebarRef}>
-            {/* Navbar desktop */}
-            <nav
-                className={clsx(
-                    "flex justify-between shadow-lg items-center p-3 bg-white max-w-full w-full fixed top-0 left-0",
-                    scrolled ? "bg-slate-300 shadow-md" : "bg-white"
-                )}
-            >
-                <Link to={"/"} className="block max-lg:hidden">
-                    <h1 className="lg:text-center text-3xl font-bold logotip pl-10">
-                        SEDAB
-                    </h1>
+            )}>
+            {/* -----------Desktop Navbar----------- */}
+            <div className={styles.navbar}>
+                <Link to={'/'} className={styles.logo}>
+                    <MotionText logo={"Xurmo"} />
                 </Link>
-                <Link to="#" className="block lg:hidden">
-                    <button onClick={showSidebar}>
-                        <HiMenuAlt1 className="HiMenuAlt1" size={22} />
-                    </button>
-                </Link>
-                <div className="w-1/3 text-left relative pl-10 max-[1000px]:w-full max-[1000px]:pl-2 ">
-                    <button
-                        className={clsx(
-                            "absolute font-bold right-8 top-2 max-[1000px]:right-4",
+                <HiMenuAlt1 onClick={showClick} size={25} className={styles.menu_icon} />
 
-                        )}
-                    >
-                        <ImSearch size={19} />
-                    </button>
-                    <input
-                        type="search"
-                        placeholder="search"
-                        className={clsx(
-                            "outline-none mx-3  p-1 pl-10 w-11/12 rounded-lg border-2 shadow-lg focus:border-2 focus:border-blue-600",
-                            !input ? "" : " max-md:hidden "
-                        )}
-                    />
-                </div>
-                <div className="hidden lg:block flex  items-center">
-                    <ul className="flex">
-                        {navLinks.map((nav) => (
-                            <li
-                                key={nav.id}
-                                className={clsx(
-                                    "text-lg  mr-7 pr-3 links",
-                                    active === nav.title ? " " : " "
-                                )}
-                            >
-                                <NavLink
-                                    to={nav.path}
-                                    className={clsx(
-                                        "flex p-1 px-2 rounded rounded-lg",
-                                        active === nav.title
-                                            ? "w-auto text-blue-800 border-b border-blue-400  "
-                                            : "items-center"
-                                    )}
-                                    onClick={() => {
-                                        setToggle(!toggle);
-                                        setActive(nav.title);
-                                        //   setSidebar(!sidebar);
-                                    }}
-                                >
-                                    {nav.title}
-                                </NavLink>
-                            </li>
-                        ))}
+                <nav>
+                    {/* -----------Navbar Links----------- */}
+                    <ul>
+                        {
+                            navLinks.map((nav, inx) => (
+                                <li key={nav.id}>
+                                    <Link onClick={() => activeLinkHandler(nav.title)} to={nav.path}
+                                        classes={clsx(
+                                            activeLink === nav.title ? styles.activeLink : '', styles.unActiveLink
+                                        )}
+                                    >
+                                        <MotionText logo={nav.title} classes={clsx(
+                                            activeLink === nav.title ? styles.activeLink : '', styles.unActiveLink
+                                        )} />
+                                    </Link>
+                                </li>
+                            ))
+                        }
                     </ul>
+                    {/* -----------Cart----------- */}
 
-                </div>
-                <div className="flex items-center">
-<div className="w-6 h-6 mr-7 relative flex justify-center items-center">
-            <Link to="/orders" className=" text-blue-700 m-auto rounded-md">
-              <AiOutlineShoppingCart className="text-red-600" size={23}
-              onClick={() => {
-                    document.title = 'Orders';
-                  }}
-              />
-              <span className="absolute right-0 -top-2 left-5  rounded-full border-3 border-amber-300  font-semibold text-red-600 w-6 h-6 flex justify-center items-center text-md">
-                12
-              </span>
-            </Link>
-          </div>
-                    <div className="flex justify-between relative items-center">
-                        <h1 className="mr-3 ml-1 max-lg:hidden">
-                            | Hello, <span className="font-semibold">John</span>
+                    <div className={styles.cart}>
+                        <Link to="/orders">
+                            <AiOutlineShoppingCart className={styles.icon_shop} size={23}
+                                onClick={() => {
+                                    document.title = 'Orders';
+                                }}
+                            />
+                            <span>
+                                12
+                            </span>
+                        </Link>
+                    </div>
+                    {/* -----------Profile----------- */}
+
+                    <div className={styles.profile} ref={ProfileRef}>
+
+                        <h1>
+                            <MotionText logo={' | Hi,'} classes="" /> <span><MotionText logo={'John'} classes="" /></span>
                         </h1>
-                        <button className="flex items-center rounded-full border-black" onClick={Profile}>
-                            
-
-                            <button onClick={Profile}>
-                                <img
-                                    src={userImg}
-                                    alt=""
-                                    className="w-10 h-10 max-md:w-9 max-md:h-9 rounded-full bg-white border-2"
-
-                                />
+                        <button className={styles.btn_profile} onClick={ProfileHandler} >
+                            <img
+                                src={userImg}
+                                alt="person"
+                            />
+                            <button onClick={ProfileHandler} className={styles.user_icon}>
+                                <FaUserAlt size={23} />
                             </button>
                         </button>
-                    </div>
-                    <div
-                        className={
-                            profile
-                                ? "absolute top-20 bg-white border shadow-lg w-1/5 p-3 right-3 max-md:w-1/2 max-lg:w-1/2 max-sm:w-11/12"
-                                : "absolute top-20 bg-white border shadow-lg w-1/5 p-3 hidden flex right-3"
-                        }
-                    >
-                        <div className="w-full relative">
-                            <h2 className="font-bold">Oybek Saminov</h2>
-                            <p>saminovo150947@gmail.com</p>
-                            <div className="w-full border border-b-1 border-slate-400"></div>
-                            <ul className="py-3">
-                                <li>Edit profile</li>
-                                <li>Preferences</li>
-                                <li className="mt-4">
-                                    <button >
-                                        <Link to={'/register'} className="bg-blue-600  p-1 rounded text-white mt-3">
-                                        Register
-                                        </Link>
-                                    </button>
-                                </li>
-                            </ul>
-                            <div className="w-full border border-b border-slate-400"></div>
-                            <button className="bg-blue-600 p-1 rounded text-white mt-3">
-                                <Link to={'/login'}>Login</Link>
-                            </button>
+                        {/* -----------Authentication------------ */}
+                        <div className={
+                            clsx(
+                                styles.auth_modal,
+                                active ? styles.block : styles.hidden
+                            )
+                        }>
+
+                            <div className={styles.links_auth}>
+                                <IoCaretUpSharp size={17} className={styles.top_icon} />
+                                <span className={styles.links}>
+                                    <Link
+                                        onClick={() => setAuthLinks('My Orders')}
+
+                                        className={clsx(
+                                            authLinks === 'My Orders' ? styles.authActiveLinks : ''
+                                        )} to={"/order-history"}>My Orders</Link>
+                                    <Link
+                                        onClick={() => setAuthLinks('Register')}
+
+                                        className={clsx(
+                                            authLinks === 'Register' ? styles.authActiveLinks : ''
+                                        )} to={"/register"}>Register</Link>
+                                    <Link
+                                        onClick={() => setAuthLinks('Login')}
+
+                                        className={clsx(
+                                            authLinks === 'Login' ? styles.authActiveLinks : ''
+                                        )} to={"/login"}>Login</Link>
+                                </span>
+                            </div>
                         </div>
                     </div>
+                </nav>
+
+            </div>
+
+            {/* -----------Sidebar Responsive------------ */}
+
+            <div className={clsx(styles.sidebar,
+                show ? styles.right : styles.left
+
+            )}
+                ref={ProfileRef}>
+                <div className={styles.logo_close}>
+                    <Link to={'/'} className={styles.logo}><MotionText logo={"Xurmo"} classes={''} /></Link>
+                    <CgClose onClick={showClick} className={styles.close_btn} size={22} />
                 </div>
 
-
-            </nav>
-            {/* Responsive Sidebar */}
-            <nav
-                className={clsx(
-                    "h-screen fixed top-0 bg-slate-200 transition-all duration-700",
-                    !sidebar ? "-left-full" : " "
-                )}
-            >
-                <div className="flex justify-between items-center pr-4 pl-2">
-                    <Link to="/">
-                        <span>
-                            <img src={userImg} width={50} className="rounded-full" alt="" />
-                        </span>
-                    </Link>
-                    <CgClose
-                        size={23}
-                        className="ml-auto hidden max-lg:block"
-                        onClick={showSidebar}
-                    />
-                </div>
-                <ul className="pl-10 w-100 mt-8 ">
-                    {navLinks.map((nav) => (
-                        <li
-                            key={nav.id}
-                            className={clsx(
-                                "text-lg mb-3 mr-7 pr-3 links",
-                                active === nav.title ? " border-r-4 border-blue-400" : " "
-                            )}
-                        >
-                            <NavLink
-                                to={nav.path}
-                                className={clsx(
-                                    "flex p-1 px-2 rounded rounded-lg",
-                                    active === nav.title
-                                        ? "w-auto text-blue-800 bg-blue-200 "
-                                        : "items-center"
-                                )}
-                                onClick={() => {
-                                    setToggle(!toggle);
-                                    setActive(nav.title);
-                                    setSidebar(!sidebar);
-                                }}
-                            >
-                                {nav.title}
-                            </NavLink>
-                        </li>
-                    ))}
+                {/* -----------Sidebar Links------------ */}
+                <ul>
+                    {
+                        navLinks.map((nav) => (
+                            <li key={nav.id}>
+                                <Link
+                                    to={nav.path}
+                                    onClick={() => {
+                                        activeLinkHandler(nav.title)
+                                        setShow(false)
+                                    }}
+                                    className={clsx(
+                                        activeLink === nav.title ? styles.activeLink : ''
+                                    )}
+                                >
+                                    {nav.title}
+                                </Link>
+                            </li>
+                        ))
+                    }
                 </ul>
-                <div className="px-3 pt-56">
-                    <div className="flex justify-between relative my-4 items-center">
-                        <h1 className="mr-3 ml-1">
-                            | Hello, <span className="font-semibold">John</span>
-                        </h1>
-                        <button className="flex items-center" onClick={Profile}>
-                            <div className="bg-white border-black rounded-full">
-                                j
-                            </div>
-                        </button>
-                    </div>
-                    <h3 className="text-sm">Restourant Admin Dashboard</h3>
-                    <p className="text-xs">@2023 All Rights Reserved</p>
-                    <p className="pt-3 text-xs">Made wuth by Peterdraw</p>
-                </div>
-            </nav>
-        </div>
-
-
+            </div>
+        </nav>
     )
 }
 

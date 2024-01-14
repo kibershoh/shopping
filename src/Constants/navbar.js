@@ -1,16 +1,16 @@
 import {RiMenu2Fill } from "react-icons/ri";
-import {AiOutlineDashboard, AiOutlineFile } from "react-icons/ai";
+import {AiOutlineDashboard} from "react-icons/ai";
 export const navLinks = [
   {
     id: 1,  
-    title: "World",
-    path: 'world',
+    title: "Home",
+    path: '/',
     icon: AiOutlineDashboard,
   },
   {
     id: 2,
-    title: "Business",
-    path: 'business',
+    title: "Contact Us",
+    path: '/contact',
     icon: RiMenu2Fill,
   },
   
