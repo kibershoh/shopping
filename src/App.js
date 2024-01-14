@@ -1,14 +1,12 @@
 import React from 'react';
-import {Header,Footer} from './Components/index';
+import {Footer, Navbar} from './Components/index';
 import { Route, Routes } from 'react-router-dom';
 import {Admin, Cart, Contact, Home, OrderHistory} from './Pages/index';
-
-{/* <Navbar/> */}
-  //  <Slider/>
+ 
 function App() {
   return (
     <>
-    <Header/>
+    <Navbar/>
     <Routes>
       <Route path='/' element={<Home/>}/>
       <Route path='/cart' element={<Cart/>}/>
@@ -22,3 +20,30 @@ function App() {
 }
 
 export default App;
+// import "./styles.css";
+// import { motion } from "framer-motion";
+
+// function App() {
+//   const text = "Framer".split(" ");
+
+//   return (
+//     <div className="App">
+//       {text.map((el, i) => (
+//         <motion.span
+//           initial={{ opacity: 0 }}
+//           animate={{ opacity: 1 }}
+//           transition={{
+//             duration: 2,
+//             delay: i / 18
+//           }}
+//           key={i}
+//         >
+//           {el}{" "}
+//         </motion.span>
+//       ))}
+//     </div>
+//   );
+// }
+
+// export default App;
+
