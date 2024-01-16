@@ -134,6 +134,10 @@
                             color: #fff;
 
                         }
+                        .logout{
+                            background-color: red;
+                            color: #fff;
+                        }
 
 
                     }
@@ -195,10 +199,11 @@
     .sidebar {
         display: none;
         position: fixed;
+        z-index: 999;
         background-color: indigo;
         padding: 20px;
         top: 0;
-        width: 290px;
+        width: 80%;
         height: 100vh;
 
         @media (max-width: '1200px') {
@@ -295,7 +300,8 @@
 }
 
 .left {
-    left: -200%;
+    left: -150%;
+
 }
 
 .right {

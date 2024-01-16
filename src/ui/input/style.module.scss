@@ -1,0 +1,13 @@
+.input{
+    margin-bottom: 12px;
+    position: relative;
+    input{
+        // "w-full focus:ring-1 focus:ring-blue-600  outline-none rounded-lg border-1 border-blue-500 p-2  "
+       width: 100%;
+       outline: none;
+       border-radius: 5px;
+       border: 1px solid rgb(246, 246, 251);
+       padding: 8px;
+       background-color: transparent;
+    }
+}
