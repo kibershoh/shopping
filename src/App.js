@@ -2,9 +2,8 @@ import React from 'react';
 import {Footer, Navbar} from './Components/index';
 import { Route, Routes } from 'react-router-dom';
 import {Admin, Cart, Contact, Home, OrderHistory,Login,Register, Reset} from './Pages/index';
- import { ToastContainer, toast } from 'react-toastify';
+ import { ToastContainer, } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Loader from './Components/Loader';
 function App() {
   return (
     <>
