@@ -1,14 +1,12 @@
 //--------------- Library---------------//
 
 import { useEffect, useRef, useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import clsx from "clsx";
 // -----------React-icons-----------//
 
-import { IoCaretUpSharp, } from "react-icons/io5";
 import { HiMenuAlt1 } from "react-icons/hi";
 import { CgClose } from "react-icons/cg";
-import { FaUserAlt } from "react-icons/fa";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 
 //----------------Files---------------- //
@@ -39,7 +37,6 @@ const Navbar = () => {
     const [scrolled, setScrolled] = useState(false);
     const [show, setShow] = useState(false)
     const [activeLink, setActiveLink] = useState('')
-    const [activeLink2, setActiveLink2] = useState('')
     const [authLinks, setAuthLinks] = useState('')
     const [displayName,setDisplayName] = useState('')
     const [email,setEmail] = useState('')
@@ -127,7 +124,7 @@ e.preventDefault()
     useEffect(()=>{
         onAuthStateChanged(auth,(user)=>{
             if(user){  
-                
+
                 
 
                 if(user.displayName === null){
