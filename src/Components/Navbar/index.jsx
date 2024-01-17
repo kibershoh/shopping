@@ -14,7 +14,8 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 //----------------Files---------------- //
 
 import navLinks from "../../Constants/navbar";
-import userImg from '../../assets/me1.jpg'
+import userImg from '../../assets/loginn.png'
+import logout from '../../assets/logoutt.png'
 import styles from './style.module.scss'
 import MotionText from "../../Constants/Framer-Motions/ForNavbar/logo";
 
@@ -22,22 +23,12 @@ import MotionText from "../../Constants/Framer-Motions/ForNavbar/logo";
 import {onAuthStateChanged, signOut} from 'firebase/auth'
 import {auth} from '../../Firebase/config'
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { REMOVE_ACTIVE_USER, SET_ACTIVE_USER } from "../../Redux/slice/authSlice";
+import HideLink, { ShowOnLogout } from "../HideLink";
 
 // Components
 
-
-
-// const logo = (
-//     <div className={styles.logo}>
-//         {/* <Link to={'/'}>Xurmo</Link> */}
-//         <motion.h1
-
-//             whileHover={{ scale: 1.2 }}
-//         >
-//             Xurmo
-//         </motion.h1>
-//     </div>
-// )
 
 
 
@@ -50,7 +41,9 @@ const Navbar = () => {
     const [activeLink, setActiveLink] = useState('')
     const [activeLink2, setActiveLink2] = useState('')
     const [authLinks, setAuthLinks] = useState('')
-    const [displayName,setDisplayName] = useState("")
+    const [displayName,setDisplayName] = useState('')
+    const [email,setEmail] = useState('')
+    const [photoURL,setPhotoUrl] = useState(null)
     const navigate = useNavigate()
     // Functions//
 
@@ -113,24 +106,10 @@ const Navbar = () => {
 
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
-// Monitor currently sign in user
-    useEffect(()=>{
-        onAuthStateChanged(auth,(user)=>{
-            if(user){
-                const uid = user.uid
-                console.log(user.displayName);
-                setDisplayName(user.displayName)
-            }
-            else{
-                setDisplayName(" ")
-                
-            }
-        })
-    },[])
 
 // -------------------FIREBASE---------------------------Logout------------//
 const logoutUser = (e)=>{
-    e.preventDefault()
+e.preventDefault()
 
     signOut(auth).then(()=>{
         toast.success("Logout successfuly.")
@@ -142,7 +121,50 @@ const logoutUser = (e)=>{
         toast.error(error.message)
 
     })
+    window.location.reload()
 }
+// Monitor currently sign in user
+    useEffect(()=>{
+        onAuthStateChanged(auth,(user)=>{
+            if(user){  
+                
+                
+
+                if(user.displayName === null){
+                    const name1 = user.email.substring(0,user.email.indexOf('@'))
+                    const name2 = name1.charAt(0).toUpperCase()+name1.slice(1)                    
+                    setDisplayName(name2)  
+                }else{
+                    setDisplayName(user.displayName)
+                }
+         
+                
+         
+
+                
+
+                dispatch(SET_ACTIVE_USER({
+                    isLoggedIn:false,
+                    email:user.email,
+                    userName:user.displayName ? user.displayName : displayName,
+                    userId:user.uid,
+                    photoURL:user.photoURL,
+                    
+                }))
+                setEmail(user.email)
+                setPhotoUrl(user.photoURL)
+            }
+            else{
+                setDisplayName(" ")
+                
+                dispatch(REMOVE_ACTIVE_USER());
+            }
+        })
+    },[displayName])
+
+
+// --------------------Redux-------------------//
+const dispatch = useDispatch()
 
 
 
@@ -194,7 +216,7 @@ const logoutUser = (e)=>{
                                 }}
                             />
                             <span>
-                                12
+                                0
                             </span>
                         </Link>
                     </div>
@@ -202,17 +224,24 @@ const logoutUser = (e)=>{
 
                     <div className={styles.profile} ref={ProfileRef}>
 
-                        <h1>
+                        <HideLink>
+                            <h1>
                            Hi | <span>{displayName}</span>
                         </h1>
+                        </HideLink>
                         <button className={styles.btn_profile} onClick={ProfileHandler} >
-                            <img
+                            {
+                                photoURL === null ? <img
                                 src={userImg}
+                                alt="person" />
+                                 :
+                             <img
+                                src={photoURL}
                                 alt="person"
-                            />
-                            <button onClick={ProfileHandler} className={styles.user_icon}>
-                                <FaUserAlt size={23} />
-                            </button>
+                              /> 
+
+                            }
+                             
                         </button>
                         {/* -----------Authentication------------ */}
                         <div className={
@@ -221,11 +250,13 @@ const logoutUser = (e)=>{
                                 active ? styles.block : styles.hidden
                             )
                         }>
-
+                       <h1>{displayName}</h1>
+                       <p>{email}</p>
                             <div className={styles.links_auth}>
-                                <IoCaretUpSharp size={17} className={styles.top_icon} />
+                                {/* <IoCaretUpSharp size={17} className={styles.top_icon} /> */}
                                 <span className={styles.links}>
-                                    <Link
+                                    <HideLink>
+                                        <Link
                                         onClick={() => {
                                             setAuthLinks('My Orders')
                                             setActive(false)
@@ -234,6 +265,7 @@ const logoutUser = (e)=>{
                                         className={clsx(
                                             authLinks === 'My Orders' ? styles.authActiveLinks : ''
                                         )} to={"/order-history"}>My Orders</Link>
+                                    </HideLink>
                                     <Link
                                         onClick={() => {
                                             setAuthLinks('Register')
@@ -243,7 +275,8 @@ const logoutUser = (e)=>{
                                         className={clsx(
                                             authLinks === 'Register' ? styles.authActiveLinks : ''
                                         )} to={"/register"}>Register</Link>
-                                    <Link
+                                   <ShowOnLogout>
+                                     <Link
                                         onClick={() => {
                                             setAuthLinks('Login')
                                             setActive(false)
@@ -253,10 +286,13 @@ const logoutUser = (e)=>{
                                         className={clsx(
                                             authLinks === 'Login' ? styles.authActiveLinks : ''
                                         )} to={"/login"}>Login</Link>
-                                    <Link
+                                   </ShowOnLogout>
+                                   <HideLink>
+                                     <button
                                         onClick={logoutUser}
                                         className={styles.logout}
-                                        >Logout</Link>
+                                        >Logout <img src={logout} width={10} alt="" /> </button>
+                                   </HideLink>
                                 </span>
                             </div>
                         </div>
