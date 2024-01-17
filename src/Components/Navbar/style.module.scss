@@ -86,10 +86,17 @@
                 position: relative;
                 align-items: center;
 
+
                 h1 {
                     font-size: 17px;
                     color: white;
                     margin-right: 10px;
+
+                    span {
+                        @media (max-width: '400px') {
+                            display: none;
+                        }
+                    }
                 }
 
                 .auth_modal {
@@ -97,7 +104,7 @@
                     background-color: white;
                     top: 50px;
                     right: 10px;
-                    width: 150px;
+                    width: 300px;
                     border-radius: 5px;
                     height: auto;
                     padding: 10px;
@@ -105,13 +112,32 @@
                     -webkit-box-shadow: -1px 1px 12px 1px rgba(0, 0, 0, 0.55);
                     -moz-box-shadow: -1px 1px 12px 1px rgba(0, 0, 0, 0.55);
 
+                    @media (max-width: '400px') {
+                        width: 200px;
+                    }
+
+                    h1 {
+                        color: #000;
+                        font-size: 23px;
+                        font-family: 'Montserrat' sans-serif;
+
+                        @media (max-width: '600px') {
+                            font-size: 15px;
+                        }
+                    }
+
+                    p {
+                        color: #898787;
+
+                    }
+
                     div {
                         position: relative;
 
                         .top_icon {
                             position: absolute;
                             right: -10px;
-                            top: -22px;
+                            top: -66px;
                             color: #fff;
                         }
                     }
@@ -119,14 +145,49 @@
                     .links {
                         display: flex;
                         flex-direction: column;
+                       .logout{
+                        display: flex;
+                        align-items: center;
+                            width: 50%;
+                            margin: auto;
+                            border: none;
+                             padding: 4px;
+                            margin: 5px 0;
+                            border-radius: 5px;
+                            color: #fff;
+                            background-color: rgb(247, 50, 50);                           
+                            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+                            img{
+                                width: 15px;
+                                margin-left: 15px;
+                                
+                            }
+                            &:hover{
+                                transition: all .3s;
+                                transform: scale(1.02);
+                                img{
+                                    transition: all .4s;
+                                    transform: translateX(10px);
+                                }
+                            }
 
-                        a {
-                            color: #000;
+                       }
+                        a{
+                            color: #fff;
                             padding: 4px;
                             margin: 5px 0;
                             border-radius: 5px;
+                            background-color: rgb(152, 46, 228);
+                           
                             font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 
+                            &:hover {
+                                transition: all .3s;
+                                transform: scale(1.01);
+                                background-color: indigo;
+                                color: #fff;
+
+                            }
                         }
 
                         .authActiveLinks {
@@ -134,10 +195,8 @@
                             color: #fff;
 
                         }
-                        .logout{
-                            background-color: red;
-                            color: #fff;
-                        }
+
+                        
 
 
                     }
