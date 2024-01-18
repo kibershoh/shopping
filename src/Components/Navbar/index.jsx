@@ -223,7 +223,7 @@ const dispatch = useDispatch()
 
                         <HideLink>
                             <h1>
-                           Hi | <span>{displayName}</span>
+                           <MotionText logo={displayName===null ? '' : `Hi | ${displayName}`}/>
                         </h1>
                         </HideLink>
                         <button className={styles.btn_profile} onClick={ProfileHandler} >
