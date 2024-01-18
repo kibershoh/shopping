@@ -67,7 +67,6 @@ const Navbar = () => {
 
     //-----------useEffects()--------------//
 
-
     // For Navbar and Sidebar
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -263,7 +262,8 @@ const dispatch = useDispatch()
                                             authLinks === 'My Orders' ? styles.authActiveLinks : ''
                                         )} to={"/order-history"}>My Orders</Link>
                                     </HideLink>
-                                    <Link
+                                 <ShowOnLogout>
+                                       <Link
                                         onClick={() => {
                                             setAuthLinks('Register')
                                             setActive(false)
@@ -272,7 +272,7 @@ const dispatch = useDispatch()
                                         className={clsx(
                                             authLinks === 'Register' ? styles.authActiveLinks : ''
                                         )} to={"/register"}>Register</Link>
-                                   <ShowOnLogout>
+                                  
                                      <Link
                                         onClick={() => {
                                             setAuthLinks('Login')

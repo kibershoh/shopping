@@ -1,0 +1,153 @@
+.slider {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background-color: var(--color-dark);
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transform: translateX(-50%);
+    transition: all 0.5s ease;
+}
+
+@media screen and (min-width: 600px) {
+    .slide img {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.slide img {
+    height: 100%;
+}
+
+.content {
+    position: absolute;
+    text-align: center;
+    top: 17rem;
+    left: 50%;
+    width: 50%;
+    padding: 3rem;
+    display: flex;
+    justify-self: center;
+    align-items: center;
+    flex-direction: column;
+    transform: translateX(-50%);
+    backdrop-filter: blur(5px);
+    animation: slide-up 1s ease 0.5s;
+    animation-fill-mode: forwards;
+    @media (max-width: '600px') {
+                            width: 80%;
+                            padding: 2rem;
+                            
+                        }
+
+    button {
+        background-color: indigo;
+        color: #fff;
+        padding: 7px;
+        border: none;
+        border-radius: 5px;
+        font-family: 'Montserrat';
+        font-size: 22px;
+
+        &:hover {
+            transition: all .3s;
+            transform: scale(1.05);
+        }
+
+    }
+
+    h2 {
+        font-size: 4.5rem;
+
+        @media (max-width: '800px') {
+           font-size: 3rem;
+        }
+        @media (max-width: '420px') {
+           font-size: 1.5rem;
+        }
+    }
+}
+
+@keyframes slide-up {
+    0% {
+        visibility: visible;
+        top: 23rem;
+    }
+
+    100% {
+        visibility: visible;
+        top: 17rem;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .content {
+       
+    }
+}
+
+.content>* {
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+.current {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.current .content {
+    opacity: 1;
+}
+
+.arrow {
+    border: 2px solid #fff;
+    border-radius: 50%;
+    background: transparent;
+    color: #fff;
+    width: 2.5rem;
+    height: 2.5rem;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+}
+
+.arrow:hover {
+    // backdrop-filter: blur(2px);
+    backdrop-filter: brightness(60%);
+    // backdrop-filter: contrast(40%);
+    // backdrop-filter: drop-shadow(4px 4px 10px blue);
+    // backdrop-filter: grayscale(30%);
+    // backdrop-filter: hue-rotate(120deg);
+    // backdrop-filter: invert(70%);
+    // backdrop-filter: opacity(20%);
+    // backdrop-filter: sepia(90%);
+    // backdrop-filter: saturate(80%);
+}
+
+.next {
+    right: 1.5rem;
+    color: #fff;
+}
+
+.prev {
+    left: 1.5rem;
+    color: #fff;
+}
+
+hr {
+    height: 2px;
+    background: #fff;
+    width: 50%;
+}
