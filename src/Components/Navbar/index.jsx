@@ -206,7 +206,7 @@ const dispatch = useDispatch()
 
                     <div className={styles.cart}>
                         <Link to="/orders">
-                            <AiOutlineShoppingCart className={styles.icon_shop} size={23}
+                            <AiOutlineShoppingCart className={styles.icon_shop}
                                 onClick={() => {
                                     document.title = 'Orders';
                                 }}
