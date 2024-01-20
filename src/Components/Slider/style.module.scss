@@ -5,7 +5,7 @@
     overflow: hidden;
     background-color: black;
     @media (max-width: '800px') {
-           height: 85vh;
+           height: 65vh;
 
     }
 }
@@ -91,12 +91,12 @@
 @keyframes slide-up {
     0% {
         visibility: visible;
-        top: 22rem;
+        top: 17rem;
     }
 
     100% {
         visibility: visible;
-        top: 10rem;
+        top: 8rem;
     }
 }
 
