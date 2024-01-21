@@ -23,7 +23,6 @@ const Register = () => {
 const navigate = useNavigate()
   const registerUser = (e) => {
     e.preventDefault()
-    console.log(email, " ", password, " ", confirmPassword,);
     if (password !== confirmPassword) {
       toast.error("Password do not match.")
 
@@ -32,7 +31,6 @@ const navigate = useNavigate()
     createUserWithEmailAndPassword(auth,email,password)
     .then((userCredential)=>{
       const user = userCredential.user
-      console.log(user);
       setLoading(false)
       toast.success("Registeration SUccessfull...")
       navigate('/login')

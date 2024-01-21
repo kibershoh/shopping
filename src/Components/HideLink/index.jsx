@@ -4,7 +4,6 @@ import { selectIsLoading } from '../../Redux/slice/authSlice'
 
 const HideLink = ({children}) => {
     const isLoggedIn = useSelector(selectIsLoading)
-    console.log(isLoggedIn,"jhgfghjkl");
     if(isLoggedIn){
         return children                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
     }    
@@ -14,7 +13,6 @@ const HideLink = ({children}) => {
 
 export const ShowOnLogout = ({children}) => {
     const isLoggedIn = useSelector(selectIsLoading)
-    console.log(isLoggedIn,"jhgfghjkl");
     if(!isLoggedIn){
         return children;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
     }

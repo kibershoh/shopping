@@ -23,7 +23,6 @@ const Slider = () => {
   // Functions
   const nextSlide = () => {
     setCurrentSlide(currentSlide === slideLength - 1 ? 0 : currentSlide + 1)
-    console.log(currentSlide);
   }
   const prevSlide = () => {
     setCurrentSlide(currentSlide === 0 ? slideLength - 1 : currentSlide - 1)
@@ -62,10 +61,7 @@ const Slider = () => {
               inx === currentSlide ? styles.current : ''
             )}
               key={inx}
-
             >
-
-
               {
                 inx === currentSlide && (
                   <>
