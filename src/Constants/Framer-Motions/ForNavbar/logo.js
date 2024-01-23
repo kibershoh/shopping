@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 function MotionText(props) {
-    const {logo,classes} = props
+  const { logo, classes } = props
   const text = logo.split(" ");
   return (
     <>
@@ -12,10 +12,10 @@ function MotionText(props) {
             duration: 2,
             delay: i / 18
           }}
-          key={i} 
-          className={classes}         
+          key={i}
+          className={classes}
         >
-{el}{" "}
+          {el}{" "}
         </motion.span>
       ))}
     </>

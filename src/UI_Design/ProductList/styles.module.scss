@@ -1,0 +1,25 @@
+.product_list {
+    display: grid;
+    grid-template-columns: 24% 24% 24% 24%;
+    margin: auto;
+    gap: 16px;
+    padding: 50px;
+
+    @media (max-width: '1024px') {
+        grid-template-columns: 32% 32% 32%;
+        padding: 30px;
+    }
+
+    @media (max-width: '900px') {
+        grid-template-columns: auto auto;
+        padding: 20px;
+
+    }
+
+    @media (max-width: '500px') {
+        grid-template-columns: auto;
+        padding: 10px;
+
+    }
+
+}

@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './styles.module.scss'
-import { servicesData } from '../../Constants/Services'
+import { servicesData } from '../../Constants/data/Services'
 import clsx from 'clsx'
 const Services = () => {
   return (

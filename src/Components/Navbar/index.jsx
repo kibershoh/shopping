@@ -11,15 +11,15 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 
 //----------------Files---------------- //
 
-import navLinks from "../../Constants/navbar";
+import navLinks from "../../Constants/Navbar";
 import userImg from '../../assets/loginn.png'
 import logout from '../../assets/logoutt.png'
 import styles from './style.module.scss'
 import MotionText from "../../Constants/Framer-Motions/ForNavbar/logo";
 
 // ----------- Firebase ------------------//
-import {onAuthStateChanged, signOut} from 'firebase/auth'
-import {auth} from '../../Firebase/config'
+import { onAuthStateChanged, signOut } from 'firebase/auth'
+import { auth } from '../../Firebase/config'
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { REMOVE_ACTIVE_USER, SET_ACTIVE_USER } from "../../Redux/slice/authSlice";
@@ -38,9 +38,9 @@ const Navbar = () => {
     const [show, setShow] = useState(false)
     const [activeLink, setActiveLink] = useState('')
     const [authLinks, setAuthLinks] = useState('')
-    const [displayName,setDisplayName] = useState('')
-    const [email,setEmail] = useState('')
-    const [photoURL,setPhotoUrl] = useState(null)
+    const [displayName, setDisplayName] = useState('')
+    const [email, setEmail] = useState('')
+    const [photoURL, setPhotoUrl] = useState(null)
     const navigate = useNavigate()
     // Functions//
 
@@ -64,6 +64,7 @@ const Navbar = () => {
 
     // Refs
     const ProfileRef = useRef(null);
+    const navbarRef = useRef(null)
 
     //-----------useEffects()--------------//
 
@@ -89,6 +90,7 @@ const Navbar = () => {
     // Scrolled
     useEffect(() => {
         const handleScroll = () => {
+
             const scrollTop = window.scrollY;
             if (scrollTop > 200) {
                 setScrolled(true);
@@ -103,64 +105,60 @@ const Navbar = () => {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-// -------------------FIREBASE---------------------------Logout------------//
-const logoutUser = (e)=>{
-e.preventDefault()
+    // -------------------FIREBASE---------------------------Logout------------//
+    const logoutUser = (e) => {
+        e.preventDefault()
 
-    signOut(auth).then(()=>{
-        toast.success("Logout successfuly.")
-        navigate('/')
-        setActive(false)
+        signOut(auth).then(() => {
+            toast.success("Logout successfuly.")
+            navigate('/')
+            setActive(false)
 
 
-    }).catch((error)=>{
-        toast.error(error.message)
+        }).catch((error) => {
+            toast.error(error.message)
 
-    })
-    window.location.reload()
-}
-// Monitor currently sign in user
-    useEffect(()=>{
-        onAuthStateChanged(auth,(user)=>{
-            if(user){  
+        })
+        window.location.reload()
+    }
+    // Monitor currently sign in user
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
 
-                
-
-                if(user.displayName === null){
-                    const name1 = user.email.substring(0,user.email.indexOf('@'))
-                    const name2 = name1.charAt(0).toUpperCase()+name1.slice(1)                    
-                    setDisplayName(name2)  
-                }else{
+                if (user.displayName === null) {
+                    const name1 = user.email.substring(0, user.email.indexOf('@'))
+                    const name2 = name1.charAt(0).toUpperCase() + name1.slice(1)
+                    setDisplayName(name2)
+                } else {
                     setDisplayName(user.displayName)
                 }
-         
-                
-         
 
-                
+
+
 
                 dispatch(SET_ACTIVE_USER({
-                    isLoggedIn:false,
-                    email:user.email,
-                    userName:user.displayName ? user.displayName : displayName,
-                    userId:user.uid,
-                    photoURL:user.photoURL,
-                    
+                    isLoggedIn: false,
+                    email: user.email,
+                    userName: user.displayName ? user.displayName : displayName,
+                    userId: user.uid,
+                    photoURL: user.photoURL,
+
                 }))
                 setEmail(user.email)
                 setPhotoUrl(user.photoURL)
             }
-            else{
+            else {
                 setDisplayName(" ")
-                
+
                 dispatch(REMOVE_ACTIVE_USER());
             }
         })
-    },[displayName])
+    }, [displayName])
 
 
-// --------------------Redux-------------------//
-const dispatch = useDispatch()
+    // --------------------Redux-------------------//
+    const dispatch = useDispatch()
 
 
 
@@ -174,7 +172,6 @@ const dispatch = useDispatch()
             ref={ProfileRef}
             className={clsx(styles.header,
                 scrolled ? styles.scrolled : styles.unscrolled,
-
             )}>
             {/* -----------Desktop Navbar----------- */}
             <div className={styles.navbar}>
@@ -189,14 +186,16 @@ const dispatch = useDispatch()
                         {
                             navLinks.map((nav, inx) => (
                                 <li key={nav.id}>
-                                    <Link onClick={() => activeLinkHandler(nav.title)} to={nav.path}
-                                        classes={clsx(
-                                            activeLink === nav.title ? styles.activeLink : '', styles.unActiveLink
-                                        )}
+                                    <Link classes={clsx(
+                                        activeLink === nav.title ? styles.activeLink : '', styles.unActiveLink
+                                    )}
+                                        onClick={() => activeLinkHandler(nav.title)} to={nav.path}
                                     >
-                                        <MotionText logo={nav.title} classes={clsx(
-                                            activeLink === nav.title ? styles.activeLink : '', styles.unActiveLink
-                                        )} />
+                                        <MotionText
+                                            logo={nav.title}
+                                            classes={clsx(
+                                                activeLink === nav.title ? styles.activeLink : '', styles.unActiveLink
+                                            )} />
                                     </Link>
                                 </li>
                             ))
@@ -222,22 +221,22 @@ const dispatch = useDispatch()
 
                         <HideLink>
                             <h1>
-                           <MotionText logo={displayName===null ? '' : `Hi | ${displayName}`}/>
-                        </h1>
+                                <MotionText logo={displayName === null ? '' : `Hi | ${displayName}`} />
+                            </h1>
                         </HideLink>
                         <button className={styles.btn_profile} onClick={ProfileHandler} >
                             {
                                 photoURL === null ? <img
-                                src={userImg}
-                                alt="person" />
-                                 :
-                             <img
-                                src={photoURL}
-                                alt="person"
-                              /> 
+                                    src={userImg}
+                                    alt="person" />
+                                    :
+                                    <img
+                                        src={photoURL}
+                                        alt="person"
+                                    />
 
                             }
-                             
+
                         </button>
                         {/* -----------Authentication------------ */}
                         <div className={
@@ -246,50 +245,54 @@ const dispatch = useDispatch()
                                 active ? styles.block : styles.hidden
                             )
                         }>
-                       <h1>{displayName}</h1>
-                       <p>{email}</p>
+                            <h1>{displayName}</h1>
+                            <p>{email}</p>
                             <div className={styles.links_auth}>
                                 {/* <IoCaretUpSharp size={17} className={styles.top_icon} /> */}
                                 <span className={styles.links}>
+
                                     <HideLink>
                                         <Link
-                                        onClick={() => {
-                                            setAuthLinks('My Orders')
-                                            setActive(false)
-                                        } }
+                                            onClick={() => {
+                                                setAuthLinks('My Orders')
+                                                setActive(false)
+                                            }}
 
-                                        className={clsx(
-                                            authLinks === 'My Orders' ? styles.authActiveLinks : ''
-                                        )} to={"/order-history"}>My Orders</Link>
+                                            className={clsx(
+                                                authLinks === 'My Orders' ? styles.authActiveLinks : ''
+                                            )} to={"/order-history"}>My Orders</Link>
                                     </HideLink>
-                                 <ShowOnLogout>
-                                       <Link
-                                        onClick={() => {
-                                            setAuthLinks('Register')
-                                            setActive(false)
-                                        } }
 
-                                        className={clsx(
-                                            authLinks === 'Register' ? styles.authActiveLinks : ''
-                                        )} to={"/register"}>Register</Link>
-                                  
-                                     <Link
-                                        onClick={() => {
-                                            setAuthLinks('Login')
-                                            setActive(false)
+                                    <ShowOnLogout>
+                                        <Link
+                                            onClick={() => {
+                                                setAuthLinks('Register')
+                                                setActive(false)
+                                            }}
 
-                                        } }
+                                            className={clsx(
+                                                authLinks === 'Register' ? styles.authActiveLinks : ''
+                                            )} to={"/register"}>Register</Link>
 
-                                        className={clsx(
-                                            authLinks === 'Login' ? styles.authActiveLinks : ''
-                                        )} to={"/login"}>Login</Link>
-                                   </ShowOnLogout>
-                                   <HideLink>
-                                     <button
-                                        onClick={logoutUser}
-                                        className={styles.logout}
+                                        <Link
+                                            onClick={() => {
+                                                setAuthLinks('Login')
+                                                setActive(false)
+
+                                            }}
+
+                                            className={clsx(
+                                                authLinks === 'Login' ? styles.authActiveLinks : ''
+                                            )} to={"/login"}>Login</Link>
+                                    </ShowOnLogout>
+
+                                    <HideLink>
+                                        <button
+                                            onClick={logoutUser}
+                                            className={styles.logout}
                                         >Logout <img src={logout} width={10} alt="" /> </button>
-                                   </HideLink>
+                                    </HideLink>
+
                                 </span>
                             </div>
                         </div>
@@ -300,13 +303,12 @@ const dispatch = useDispatch()
 
             {/* -----------Sidebar Responsive------------ */}
 
-            <div className={clsx(styles.sidebar,
-                show ? styles.right : styles.left
-
-            )}
+            <div className={clsx(styles.sidebar, show ? styles.right : styles.left)}            
                 ref={ProfileRef}>
                 <div className={styles.logo_close}>
-                    <Link to={'/'} className={styles.logo}><MotionText logo={"Xurmo"} classes={''} /></Link>
+                    <Link to={'/'} className={styles.logo}>
+                        <MotionText logo={"Xurmo"} classes={''} />
+                    </Link>
                     <CgClose onClick={showClick} className={styles.close_btn} size={22} />
                 </div>
 

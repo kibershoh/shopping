@@ -7,7 +7,7 @@ import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai'
 
 //Styles
 import styles from './style.module.scss'
-import { sliderData } from '../../Constants/SliderData'
+import { sliderData } from '../../Constants/data/Slider'
 
 
 const Slider = () => {
