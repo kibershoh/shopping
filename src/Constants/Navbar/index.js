@@ -9,8 +9,14 @@ export const navLinks = [
   },
   {
     id: 2,
-    title: "Contact Us",
-    path: '/contact',
+    title: "Shop",
+    path: '/shop',
+    icon: RiMenu2Fill,
+  },
+  {
+    id: 2,
+    title: "Cart",
+    path: '/cart',
     icon: RiMenu2Fill,
   },
   

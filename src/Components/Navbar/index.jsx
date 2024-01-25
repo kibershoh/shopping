@@ -21,7 +21,7 @@ import MotionText from "../../Constants/Framer-Motions/ForNavbar/logo";
 import { onAuthStateChanged, signOut } from 'firebase/auth'
 import { auth } from '../../Firebase/config'
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { REMOVE_ACTIVE_USER, SET_ACTIVE_USER } from "../../Redux/slice/authSlice";
 import HideLink, { ShowOnLogout } from "../HideLink";
 
@@ -160,7 +160,7 @@ const Navbar = () => {
     // --------------------Redux-------------------//
     const dispatch = useDispatch()
 
-
+   const totalQuantity = useSelector(state => state.cart.totalQuantity)
 
 
 
@@ -211,7 +211,7 @@ const Navbar = () => {
                                 }}
                             />
                             <span>
-                                0
+                                {totalQuantity}
                             </span>
                         </Link>
                     </div>

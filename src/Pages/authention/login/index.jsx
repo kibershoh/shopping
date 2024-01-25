@@ -82,12 +82,7 @@ const Login = () => {
                     </button>
                     <Link to={'/reset'}>Reset password</Link>
                     <p>-- or --</p>
-                    <button className={styles.with_google} type="submit"
-                        onClick={signInWithGoogle}
-                    >
-                        <img src={googleIcon} alt="" />
-                        Login With Google
-                    </button>
+                    
                     <p>Don't have an account? <Link to={'/register'}> Register</Link></p>
 
                 </form>

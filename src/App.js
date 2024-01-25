@@ -1,17 +1,23 @@
 import React from 'react';
 import {Footer, Navbar} from './Components/index';
 import { Route, Routes } from 'react-router-dom';
-import {Admin, Cart, Contact, Home, OrderHistory,Login,Register, Reset} from './Pages/index';
+import {Admin, Cart, Contact, Home, OrderHistory,Login,Register, Reset, Shop} from './Pages/index';
  import { ToastContainer, } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 function App() {
   return (
     <>
-    <ToastContainer/>
+    <ToastContainer
+     autoClose={500}
+     theme='dark'
+     closeOnClick
+     pauseOnHover={false}
+     />
     <Navbar/>    
     <Routes>
       <Route path='/' element={<Home/>}/>
       <Route path='/cart' element={<Cart/>}/>
+      <Route path='/shop' element={<Shop/>}/>
       <Route path='/contact' element={<Contact/>}/>
       <Route path='/orderhistory' element={<OrderHistory/>}/>
       <Route path='/admin' element={<Admin/>}/>
