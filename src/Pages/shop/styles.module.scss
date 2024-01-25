@@ -1,0 +1,109 @@
+.shop {
+  .shop_header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    .filter_product{
+      display: flex;
+
+    }
+  }
+  select {
+    /* styling */
+    background-color: white;
+    border: thin solid blue;
+    border-radius: 4px;
+    display: inline-block;
+    font: inherit;
+    line-height: 1.5em;
+    padding: 0.5em 3.5em 0.5em 1em;
+
+    /* reset */
+
+    margin: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+
+
+  /* arrows */
+select option {
+  background-color:red;
+  padding: 10px 0;
+}
+select option:hover {
+color:black;
+  background-color: green;
+}
+    
+  .category_select {
+
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif ;
+    option{
+    font-family: 'Montserrat'; 
+    padding: 10px;  
+    }
+    margin-right: 20px;
+    background-image:
+      linear-gradient(45deg, transparent 50%, #fff 50%),
+      linear-gradient(135deg, #fff 50%, transparent 50%),
+      linear-gradient(to right, indigo, indigo);
+    background-position:
+      calc(100% - 20px) calc(1em + 2px),
+      calc(100% - 15px) calc(1em + 2px),
+      100% 0;
+    background-size:
+      5px 5px,
+      5px 5px,
+      2.5em 2.5em;
+    background-repeat: no-repeat;
+  }
+
+  .category_select:focus {
+    background-image:
+      linear-gradient(45deg, white 50%, transparent 50%),
+      linear-gradient(135deg, transparent 50%, white 50%),
+      linear-gradient(to right, indigo, indigo);
+    background-position:
+      calc(100% - 15px) 1em,
+      calc(100% - 20px) 1em,
+      100% 0;
+    background-size:
+      5px 5px,
+      5px 5px,
+      2.5em 2.5em;
+    background-repeat: no-repeat;
+    border-color: indigo;
+    outline: 0;
+  }
+
+
+
+  .search_input {
+    width: 300px;
+    height: 40px;
+    line-height: 28px;
+    padding: 0 1rem;
+    padding-left: 2.5rem;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    outline: none;
+    background-color: #f3f3f4;
+    color: #0d0c22;
+    transition: 0.3s ease;
+  }
+
+  .search_input:focus,
+  .search_input:hover {
+    outline: none;
+    border-color: blue;
+    background-color: #fff;
+    box-shadow: 0px 1px 1px -2px blue;
+  }
+
+
+}

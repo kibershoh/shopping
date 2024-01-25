@@ -7,7 +7,29 @@ import { FiHeart } from "react-icons/fi";
 import { BsPlusLg } from "react-icons/bs";
 
 import { formatCurrency } from '../../Constants/utils/moneyCurrent'
+import { useDispatch } from 'react-redux';
+
+// Redux
+import { cartActions } from '../../Redux/slice/cartSlice';
+import { toast } from 'react-toastify';
+
 const ProductCard = ({ item }) => {
+
+ const dispatch = useDispatch()
+
+ const addToCart = ()=>{
+  dispatch(
+    cartActions.addItem({
+      id:item.id,
+      productName:item.productName,
+      price:item.price,
+      image:item.imgUrl,
+
+    })
+  )
+toast.success('Product added to cart')
+ }
+
   return (
     <div className={styles.product_item}>
       <motion.button whileHover={{ scale: 1.1 }} className={styles.like_btn}>
@@ -24,7 +46,9 @@ const ProductCard = ({ item }) => {
       </div>
       <span className={styles.category}>{item.category}</span>
       <div className={styles.product_btn}>
-        <motion.button whileHover={{ scale: 1.09 }} className={styles.add_btn}>
+        <motion.button whileHover={{ scale: 1.09 }} className={styles.add_btn}
+        onClick={addToCart}
+        >
           Add <BsPlusLg className={styles.plus_icon} size={22} />
         </motion.button>
         <span>{formatCurrency(item.price)}</span>
