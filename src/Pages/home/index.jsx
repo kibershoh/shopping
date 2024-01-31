@@ -30,7 +30,6 @@ const Home = () => {
     const filteredGuitar = products.filter(
       (item) => item.category === 'guitar'
     )
-
     setMicraphone(filteredPopular)
     setHeadphones(filteredBest)
     setWireless(filteredwireless)

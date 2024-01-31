@@ -9,14 +9,17 @@ import { BsPlusLg } from "react-icons/bs";
 import { formatCurrency } from '../../Constants/utils/moneyCurrent'
 import { useDispatch } from 'react-redux';
 
+// ------------ React Icons-------------//
+import { LuPlus } from "react-icons/lu";
 // Redux
 import { cartActions } from '../../Redux/slice/cartSlice';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const ProductCard = ({ item }) => {
 
  const dispatch = useDispatch()
-
+const navigate = useNavigate()
  const addToCart = ()=>{
   dispatch(
     cartActions.addItem({
@@ -30,6 +33,10 @@ const ProductCard = ({ item }) => {
 toast.success('Product added to cart')
  }
 
+  const toDetails = (id)=>{
+navigate('/shop/'+id)
+   }  
+
   return (
     <div className={styles.product_item}>
       <motion.button whileHover={{ scale: 1.1 }} className={styles.like_btn}>
@@ -37,7 +44,7 @@ toast.success('Product added to cart')
       </motion.button>
 
       <div className={styles.product_img}>
-        <motion.img whileHover={{ scale: 0.8 }} src={item.imgUrl} alt="" />
+        <motion.img onClick={()=>toDetails(item.id)} whileHover={{ scale: 0.8 }} src={item.imgUrl} alt="" />
       </div>
       <div className={styles.name_price}>
         <h3>{item.productName}</h3>
