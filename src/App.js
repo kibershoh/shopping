@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {Footer, Navbar} from './Components/index';
 import { Route, Routes } from 'react-router-dom';
 import {Admin, Cart, Contact, Home, OrderHistory,Login,Register, Reset, Shop} from './Pages/index';
  import { ToastContainer, } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ProductDetails from './Pages/productDetails';
 function App() {
+  
+   
+
+   
+
   return (
     <>
     <ToastContainer
@@ -18,6 +24,7 @@ function App() {
       <Route path='/' element={<Home/>}/>
       <Route path='/cart' element={<Cart/>}/>
       <Route path='/shop' element={<Shop/>}/>
+      <Route path='/shop/:id' element={<ProductDetails/>}/>
       <Route path='/contact' element={<Contact/>}/>
       <Route path='/orderhistory' element={<OrderHistory/>}/>
       <Route path='/admin' element={<Admin/>}/>
@@ -26,35 +33,9 @@ function App() {
       <Route path='/reset' element={<Reset/>}/>
     </Routes>
     <Footer/>
+
     </>
   );
 }
 
 export default App;
-// import "./styles.css";
-// import { motion } from "framer-motion";
-
-// function App() {
-//   const text = "Framer".split(" ");
-
-//   return (
-//     <div className="App">
-//       {text.map((el, i) => (
-//         <motion.span
-//           initial={{ opacity: 0 }}
-//           animate={{ opacity: 1 }}
-//           transition={{
-//             duration: 2,
-//             delay: i / 18
-//           }}
-//           key={i}
-//         >
-//           {el}{" "}
-//         </motion.span>
-//       ))}
-//     </div>
-//   );
-// }
-
-// export default App;
-
