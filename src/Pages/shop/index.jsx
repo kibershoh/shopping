@@ -1,14 +1,20 @@
 import React, { useState } from 'react'
-import TotalSection from '../../UI_Design/TotalSection'
-import styles from './styles.module.scss'
-import products from '../../Constants/data/products'
-import { MdOutlineSearch } from "react-icons/md";
-import { ProductList } from '../../UI_Design';
 import { useNavigate } from 'react-router-dom';
+
+// ~~~~~~~~~React Icons~~~~~~~~~//
+import { MdOutlineSearch } from "react-icons/md";
+
+// ~~~~~~~~~Components~~~~~~~~//
+import TotalSection from '../../UI_Design/TotalSection'
+import { ProductList } from '../../UI_Design';
+import styles from './styles.module.scss'
+
+// ~~~~~~~~~Data~~~~~~~~~~//
+import products from '../../Constants/data/products'
 
 const Shop = () => {
   const [productsData,setProductsData] = useState(products)
-const navigate = useNavigate()
+  const navigate = useNavigate()
   const handleFilter = (e)=>{
     const filterValue = e.target.value;
     if(filterValue==='micraphone'){

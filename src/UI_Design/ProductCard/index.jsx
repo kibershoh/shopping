@@ -1,13 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 
 import styles from './styles.module.scss'
 
 import { FiHeart } from "react-icons/fi";
 import { BsPlusLg } from "react-icons/bs";
+import { BsCartPlus } from "react-icons/bs";
 
 import { formatCurrency } from '../../Constants/utils/moneyCurrent'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // ------------ React Icons-------------//
 import { LuPlus } from "react-icons/lu";
@@ -17,25 +18,28 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
 const ProductCard = ({ item }) => {
+  const productItems = useSelector(state => state.cart.cartItems)
 
- const dispatch = useDispatch()
-const navigate = useNavigate()
- const addToCart = ()=>{
-  dispatch(
-    cartActions.addItem({
-      id:item.id,
-      productName:item.productName,
-      price:item.price,
-      image:item.imgUrl,
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  // const [added, setAdded] = useState(false)
+  const addToCart = () => {
+    dispatch(
+      cartActions.addProduct({
+        id: item.id,
+        productName: item.productName,
+        price: item.price,
+        image: item.imgUrl,
+       
+        
 
-    })
-  )
-toast.success('Product added to cart')
- }
+      })
+    )  
+  }
 
-  const toDetails = (id)=>{
-navigate('/shop/'+id)
-   }  
+  const toDetails = (id) => {
+    navigate('/shop/' + id)
+  }
 
   return (
     <div className={styles.product_item}>
@@ -44,7 +48,10 @@ navigate('/shop/'+id)
       </motion.button>
 
       <div className={styles.product_img}>
-        <motion.img onClick={()=>toDetails(item.id)} whileHover={{ scale: 0.8 }} src={item.imgUrl} alt="" />
+        <a href="#shop_detail">
+          <motion.img onClick={() => toDetails(item.id)} whileHover={{ scale: 0.8 }} src={item.imgUrl} alt="" />
+
+        </a>
       </div>
       <div className={styles.name_price}>
         <h3>{item.productName}</h3>
@@ -52,12 +59,20 @@ navigate('/shop/'+id)
 
       </div>
       <span className={styles.category}>{item.category}</span>
-      <div className={styles.product_btn}>
-        <motion.button whileHover={{ scale: 1.09 }} className={styles.add_btn}
-        onClick={addToCart}
-        >
-          Add <BsPlusLg className={styles.plus_icon} size={22} />
-        </motion.button>
+      <div className={styles.product_add}>
+        <motion.button onClick={addToCart} whileHover={{ scale: 1.09 }} className={styles.product_btn}>
+          <div className={styles.button_wrapper}>
+            <div className={styles.text}>
+              {
+                item.added ? 'Added' : 'Buy Now'
+              }
+            </div>
+            <span className={styles.icon}>
+              {
+                item.added ? 'Added' : <BsCartPlus />
+              }
+            </span>
+          </div></motion.button>
         <span>{formatCurrency(item.price)}</span>
 
       </div>

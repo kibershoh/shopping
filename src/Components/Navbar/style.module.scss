@@ -58,6 +58,10 @@
 
                      .icon_shop {
                          color: white;
+                         &:hover{
+                            transition: all .4s;
+                            transform: scale(1.2);
+                         }
                      }
 
                      span {

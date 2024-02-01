@@ -1,26 +1,27 @@
 import React, { useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
 
 // --------React Icons -----------//
 import { IoStarSharp } from "react-icons/io5";
 import { LuPlus } from 'react-icons/lu';
-import StarIcon from '@mui/icons-material/Star';
 
 // --------Library-------//
+import { toast } from 'react-toastify';
+import { Rating } from '@mui/material';
 import { motion } from 'framer-motion'
+import StarIcon from '@mui/icons-material/Star';
 
 // ----------Components----------//
-import styles from './styles.module.scss'
 import { formatCurrency } from '../../Constants/utils/moneyCurrent';
-import products from '../../Constants/data/products'
-// import products from '../../Constants/data/products';
+import styles from './styles.module.scss'
 import ProductList from '../../UI_Design/ProductList';
-import { useDispatch } from 'react-redux';
-import { cartActions } from '../../Redux/slice/cartSlice';
-import { toast } from 'react-toastify';
-import { Box, Rating } from '@mui/material';
 
-// -----------Stars----------//
+// -------------Data-------------//
+import products from '../../Constants/data/products'
+
+// -----------Redux----------//
+import { cartActions } from '../../Redux/slice/cartSlice';
 
 
 
@@ -32,17 +33,13 @@ const ProductDetails = () => {
     // ----------States -----------//
     const [name, setName] = useState('')
     const [message, setMessage] = useState('')
+    const [tab, setTab] = useState('desc')
+    
+    
     const product = products.find(item => item.id === id)
     const { imgUrl, productName, price, avgRating, reviews, description, shortDesc, category } = product;
-    const [tab, setTab] = useState('desc')
-
-
     const categoryData = products.filter((item) => item.category === category)
-
-
-    const loginUser = () => {
-
-    }
+   
     const labels = {
         0.5: 'Uselkjm',
         1: 'Useless+',
@@ -58,74 +55,44 @@ const ProductDetails = () => {
 
     // ----------Stars-----------//
     const [rating, setRating] = useState(0);
-    const [ratingText, setRatingText] = useState('');
     const [hover, setHover] = useState(-1);
+        let text = ''   
 
-
-
-    const getRatingText = (ratingf) => {
-        switch (ratingf) {
-            case 0.5: setRatingText('Useless')
-                break;
-            case 1: setRatingText('Useless+')
-                break;
-            case 1.5: setRatingText(labels['1.5'])
-                break;
-            case 2: setRatingText(labels['2'])
-                break;
-            case 2.5: setRatingText(labels['2.5'])
-                break;
-            case 3: setRatingText(labels['3'])
-                break;
-            case 3.5: setRatingText(labels['3.5'])
-                break;
-            case 4: setRatingText(labels['4'])
-                break;
-            case 4.5: setRatingText(labels['4.5'])
-                break;
-            case 5: setRatingText(labels['5'])
-                break;
-            default: setRatingText('')
-
-        }
-    }
-
-
-    // -------Rewiews----------//
-
+        // -------Rewiews----------//
     const rewiewUser = useRef('')
     const reviewMsg = useRef('')
     const dispatch = useDispatch()
 
 
+// -------------Functions---------//
     const submitHandler = (e) => {
         e.preventDefault()
        
-const reviewUserName = rewiewUser.current.value;
+     const reviewUserName = rewiewUser.current.value;
         const reviewUserMsg = reviewMsg.current.value;
 
         switch (rating) {
-            case 0.5: setRatingText('Useless')
+            case 0.5: text = labels['0.5']
                 break;
-            case 1: setRatingText('Useless+')
+            case 1: text=labels[1]
                 break;
-            case 1.5: setRatingText(labels['1.5'])
+            case 1.5: text=labels['1.5']
                 break;
-            case 2: setRatingText(labels['2'])
+            case 2: text=labels['2']
                 break;
-            case 2.5: setRatingText(labels['2.5'])
+            case 2.5: text=labels['2.5']
                 break;
-            case 3: setRatingText(labels['3'])
+            case 3: text=labels['3']
                 break;
-            case 3.5: setRatingText(labels['3.5'])
+            case 3.5: text=labels['3.5']
                 break;
-            case 4: setRatingText(labels['4'])
+            case 4: text=labels['4']
                 break;
-            case 4.5: setRatingText(labels['4.5'])
+            case 4.5: text=labels['4.5']
                 break;
-            case 5: setRatingText(labels['5'])
+            case 5: text=labels['5']
                 break;
-            default: setRatingText('')
+            default: text=' '
 
         }
          
@@ -133,23 +100,22 @@ const reviewUserName = rewiewUser.current.value;
             userName: reviewUserName,
             text: reviewUserMsg,
             rating: rating,
-            ratingText: ratingText,
+            text: text,
         }
-        console.log(rewiewArr);
+        toast.success('Reviews send!')
     }
     const addToCart = () => {
-        dispatch(cartActions.addItem({
+        dispatch(cartActions.addProduct({
             id: id,
-            images: imgUrl,
+            image: imgUrl,
             productName: productName,
             price: price,
         }))
-        toast.success("Product added successfully!")
     }
 
     return (
         <>
-            <div className={styles.details}>
+            <div id='shop_detail' className={styles.details}>
 
                 <div className={styles.product_details}>
                     <div className={styles.product_detail}>
@@ -197,7 +163,6 @@ const reviewUserName = rewiewUser.current.value;
                                                 ))
                                             }
                                         </div>
-
                                 }
                             </div>
                         </div>
@@ -211,6 +176,7 @@ const reviewUserName = rewiewUser.current.value;
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
                                         type='text' placeholder='Enter your name'
+                                        required
                                     />
                                 </div>
                                 <div className={styles.send_msg}>
@@ -221,6 +187,7 @@ const reviewUserName = rewiewUser.current.value;
                                         onChange={(e) => setMessage(e.target.value)}
                                         rows={5}
                                         type='text' placeholder='Message'
+                                        required
                                     />
                                 </div>
                                 <div>
@@ -245,7 +212,7 @@ const reviewUserName = rewiewUser.current.value;
                                         )}
                                     </div>
                                 </div>
-                                <h1>{ratingText}</h1>
+                                <h1>{text}</h1>
 
                                 <button className={styles.login_btn} type="submit">
                                     Send

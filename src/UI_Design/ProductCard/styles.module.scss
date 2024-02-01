@@ -58,33 +58,137 @@
         color: rgb(89, 88, 88);
     }
 
+
+
+
+.product_add{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+    // ~~~~~~~~~~~~~~~~~~~~~~
     .product_btn {
-        margin-top: 30px;
+        --width: 100px;
+        --height: 35px;
+        --tooltip-height: 35px;
+        --tooltip-width: 90px;
+        --gap-between-tooltip-to-button: 18px;
+        --button-color: indigo;
+        --tooltip-color: #fff;
         width: 100%;
         display: flex;
         justify-content: space-between;
         align-items: center;
-
-        .add_btn {
-            width: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 5px;
-            border: none;
-            background-color: indigo;
-            color: #fff;
-            font-size: 17px;
-            border-radius: 4px;
-            font-family: 'Montserrat';
-
-        }
-
-        span {
-            color: #696969;
-            font-weight: 600;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+        width: var(--width);
+        height: var(--height);
+        background: var(--button-color);
+        border: none;
+        position: relative;
+        text-align: center;
+        border-radius: 0.45em;
+        font-family: "Arial";
+        transition: background 0.3s;
     }
+
+    .product_btn::before {
+        position: absolute;
+        content: attr(data-tooltip);
+        width: var(--tooltip-width);
+        height: var(--tooltip-height);
+        font-size: 0.9rem;
+        color: #fff;
+        border-radius: .25em;
+        line-height: var(--tooltip-height);
+        bottom: calc(var(--height) + var(--gap-between-tooltip-to-button) + 10px);
+        left: calc(50% - var(--tooltip-width) / 2);
+    }
+
+    .button::after {
+        position: absolute;
+        content: '';
+        width: 0;
+        height: 0;
+        border: 10px solid transparent;
+        border-top-color: indigo;
+        left: calc(50% - 10px);
+        bottom: calc(100% + var(--gap-between-tooltip-to-button) - 10px);
+    }
+
+    .product_btn::after,
+    .product_btn::before {
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.5s;
+    }
+
+    .text {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .button_wrapper,
+    .text,
+    .icon {
+        overflow: hidden;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        color: #fff;
+    }
+
+    .text {
+        top: 0
+    }
+
+    .text,
+    .icon {
+        transition: top 0.5s;
+    }
+
+    .icon {
+        color: #fff;
+        top: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .icon svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    .product_btn:hover {
+        background: indigo;
+    }
+
+    .product_btn:hover .text {
+        top: -100%;
+    }
+
+    .product_btn:hover .icon {
+        top: 0;
+    }
+
+    .product_btn:hover:before,
+    .product_btn:hover:after {
+        opacity: 1;
+        visibility: visible;
+    }
+
+
+
+
+    // ~~~~~~~~~~~~~~~~~~~~~~
+
+    span {
+        color: #696969;
+        font-weight: 600;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
 
 }

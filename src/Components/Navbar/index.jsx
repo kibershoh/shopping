@@ -204,16 +204,17 @@ const Navbar = () => {
                     {/* -----------Cart----------- */}
 
                     <div className={styles.cart}>
-                        <Link to="/orders">
-                            <AiOutlineShoppingCart className={styles.icon_shop}
+                            <a href="#cart">
+                                <AiOutlineShoppingCart size={25} className={styles.icon_shop}
                                 onClick={() => {
-                                    document.title = 'Orders';
+                                    navigate('/cart')
+                                    document.title = 'Cart';
                                 }}
                             />
                             <span>
                                 {totalQuantity}
                             </span>
-                        </Link>
+                            </a>
                     </div>
                     {/* -----------Profile----------- */}
 
