@@ -21,7 +21,7 @@ const Login = () => {
     const [password, setPassword] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const navigate = useNavigate();
-    
+
     //  ------------------ Functions ------------------ //
     // const loginUser = (e) => {
     //     e.preventDefault()
@@ -42,18 +42,18 @@ const Login = () => {
 
     //         })
     // }
-    const loginUser = async (e)=>{
+    const loginUser = async (e) => {
         e.preventDefault()
         setIsLoading(true)
 
-        try{
-            const userCredential = await signInWithEmailAndPassword(auth,email,password)
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password)
             const user = userCredential.user
             console.log(user);
             setIsLoading(false)
             toast.success("Successfully logged in ")
             navigate('/checkout')
-        }catch(error){
+        } catch (error) {
             setIsLoading(false)
             toast.error(error.message)
         }
@@ -70,14 +70,14 @@ const Login = () => {
     }
     return (
         <>
-                {isLoading && <Loader/>}
+            {isLoading && <Loader />}
 
             <div className={styles.login}>
                 <form onSubmit={loginUser}>
-                <h1 className={styles.title}>Login</h1>
+                    <h1 className={styles.title}>Login</h1>
 
                     <div>
-                        
+
                         <input
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
@@ -86,10 +86,10 @@ const Login = () => {
                         />
                         <label>Your Email</label>
                     </div>
+                    
                     <div>
-                        
                         <input
-                        required
+                            required
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
 
@@ -102,7 +102,7 @@ const Login = () => {
                         Login
                     </button>
                     <Link className={styles.reset_btn} to={'/reset'}>Reset password</Link>
-                    
+
                     <p>Don't have an account? <Link to={'/register'}> Create account</Link></p>
 
                 </form>
@@ -114,4 +114,3 @@ const Login = () => {
 }
 
 export default Login;
- 

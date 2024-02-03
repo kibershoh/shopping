@@ -17,11 +17,11 @@ const Reset = () => {
     const [email, setEmail] = useState('')
     const [isLoading, setIsLoading] = useState(false)
 
-    
+
     // ---------Functions ------ Reset password //   
     const resetPassword = (e) => {
         e.preventDefault()
-        setIsLoading(true)        
+        setIsLoading(true)
         sendPasswordResetEmail(auth, email)
             .then(() => {
                 setIsLoading(false)
@@ -38,32 +38,32 @@ const Reset = () => {
 
     return (
         <>
-        {isLoading && <Loader/>}
+            {isLoading && <Loader />}
             <div className={styles.login}>
                 <form onSubmit={resetPassword}>
+
                     <div>
-                        <label> You Email</label>
                         <input
-                        required
+                            required
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
 
                             type='email' placeholder='Email'
                         />
+                        <label> You Email</label>
+
                     </div>
-                     
-                    
+
+
                     <button className={styles.login_btn} type="submit">
                         Reset Password
                     </button>
 
-                    <button className={styles.with_google} type="submit">
+                    <div className={styles.login_register_btn} >
                         <Link to={'/login'}>Login</Link>
-                    </button>
-                    <button className={styles.with_google} type="submit">
                         <Link to={'/register'}>Register</Link>
-                    </button>
 
+                    </div>
                 </form>
             </div>
 

@@ -23,12 +23,11 @@ import { doc, setDoc } from 'firebase/firestore';
 const Register = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
   const [username, setUsername] = useState("")
   const [loading, setLoading] = useState(false)
   const [fileUrl, setFileUrl] = useState(null)
-  const [photoName, setPhotoName] = useState(null)
   const navigate = useNavigate()
+  const fileInputRef = useRef(null);
   const registerUser = async (e) => {
     e.preventDefault()
     setLoading(true)
@@ -79,7 +78,7 @@ const Register = () => {
     }
 
   }
-  const fileInputRef = useRef(null);
+  
 
   const actives = () => {
     fileInputRef.current.click();
@@ -91,6 +90,7 @@ const Register = () => {
       <div className={styles.login}>
         <form onSubmit={registerUser}>
           <h1 className={styles.title}>Register</h1>
+
           <div>
             <input
               value={username}
@@ -102,6 +102,7 @@ const Register = () => {
             />
             <label>Username</label>
           </div>
+
           <div>
             <input
               value={email}
@@ -112,6 +113,7 @@ const Register = () => {
             />
             <label>Your Email</label>
           </div>
+          
           <div>
             <input
               value={password}
@@ -122,33 +124,26 @@ const Register = () => {
             />
             <label>Password</label>
           </div>
-          {/* <div>
-            <label>Confirm Password</label>
-            <input
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
 
-              type='password' placeholder='Confirm Password'
-            />
-          </div> */}
           <div className={styles.file_input}>
             <h2 className={styles.choose_file} onClick={actives}>
-              <MdAddAPhoto size={28} className={styles.camera} />
+              <MdAddAPhoto className={styles.camera} />
               <p>Download Photo</p>
             </h2>
             <input
-             
+
               ref={fileInputRef}
               onChange={(e) => {
                 setFileUrl(e.target.files[0])
-                
+
               }}
               type='file'
             />
-            
+
           </div>
 
+         
+         
           <button className={styles.login_btn} type="submit">
             Register
           </button>
