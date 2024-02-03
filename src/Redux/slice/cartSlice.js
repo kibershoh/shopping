@@ -76,6 +76,7 @@ const initialState = {
     cartItems: [],
     totalAmout: 0,
     totalQuantity: 0,
+    shippingPrice:10,
 };
 
 const cartSlice = createSlice({
@@ -100,14 +101,15 @@ const cartSlice = createSlice({
                 state.totalQuantity++;
                 state.totalAmout += newItem.price;
                 state.cartItems.map((item)=>{
-                    item.added = !newItem.added
+                    item.added = !newItem.action
+                    
                 })
-                toast.success("Product added successfully");
-            } else {
-                existingItem.quantity++;
-                existingItem.totalPrice =
-                    Number(existingItem.totalPrice) + Number(newItem.price);
 
+                toast.success("Product added successfully");
+               
+            } else {
+                // existingItem.quantity++;
+                existingItem.totalPrice = Number(existingItem.totalPrice) + Number(newItem.price);
                 state.totalAmout = state.cartItems.reduce(
                     (total, item) => total + Number(item.totalPrice),
                     0

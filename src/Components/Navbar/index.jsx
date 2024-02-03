@@ -24,6 +24,7 @@ import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { REMOVE_ACTIVE_USER, SET_ACTIVE_USER } from "../../Redux/slice/authSlice";
 import HideLink, { ShowOnLogout } from "../HideLink";
+import UseAuth from "../../Custom Hooks/UseAuth";
 
 // Components
 
@@ -32,6 +33,12 @@ import HideLink, { ShowOnLogout } from "../HideLink";
 
 
 const Navbar = () => {
+    // ~~~~~~Protected Route and firebase auth~~~~~//
+
+const {currentUser} = UseAuth()
+
+
+
     // All States
     const [active, setActive] = useState(false)
     const [scrolled, setScrolled] = useState(false);
@@ -106,55 +113,66 @@ const Navbar = () => {
     }, []);
 
     // -------------------FIREBASE---------------------------Logout------------//
-    const logoutUser = (e) => {
-        e.preventDefault()
+   
+   const logoutUser = ()=>{
+    signOut(auth).then(()=>{
+        toast.success("Logged out successfully")
+        navigate('/')
+        setActive(false)
+    }).catch((error)=>{
+        toast.error(error.message)
+    })
+   }
+   
+    // const logoutUser = (e) => {
+    //     e.preventDefault()
 
-        signOut(auth).then(() => {
-            toast.success("Logout successfuly.")
-            navigate('/')
-            setActive(false)
+    //     signOut(auth).then(() => {
+    //         toast.success("Logout successfuly.")
+    //         navigate('/')
+    //         setActive(false)
 
 
-        }).catch((error) => {
-            toast.error(error.message)
+    //     }).catch((error) => {
+    //         toast.error(error.message)
 
-        })
-        window.location.reload()
-    }
+    //     })
+    //     window.location.reload()
+    // }
     // Monitor currently sign in user
-    useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
+    // useEffect(() => {
+    //     onAuthStateChanged(auth, (user) => {
+    //         if (user) {
 
-                if (user.displayName === null) {
-                    const name1 = user.email.substring(0, user.email.indexOf('@'))
-                    const name2 = name1.charAt(0).toUpperCase() + name1.slice(1)
-                    setDisplayName(name2)
-                } else {
-                    setDisplayName(user.displayName)
-                }
-
-
+    //             if (user.displayName === null) {
+    //                 const name1 = user.email.substring(0, user.email.indexOf('@'))
+    //                 const name2 = name1.charAt(0).toUpperCase() + name1.slice(1)
+    //                 setDisplayName(name2)
+    //             } else {
+    //                 setDisplayName(user.displayName)
+    //             }
 
 
-                dispatch(SET_ACTIVE_USER({
-                    isLoggedIn: false,
-                    email: user.email,
-                    userName: user.displayName ? user.displayName : displayName,
-                    userId: user.uid,
-                    photoURL: user.photoURL,
 
-                }))
-                setEmail(user.email)
-                setPhotoUrl(user.photoURL)
-            }
-            else {
-                setDisplayName(" ")
 
-                dispatch(REMOVE_ACTIVE_USER());
-            }
-        })
-    }, [displayName])
+    //             dispatch(SET_ACTIVE_USER({
+    //                 isLoggedIn: false,
+    //                 email: user.email,
+    //                 userName: user.displayName ? user.displayName : displayName,
+    //                 userId: user.uid,
+    //                 photoURL: user.photoURL,
+
+    //             }))
+    //             setEmail(user.email)
+    //             setPhotoUrl(user.photoURL)
+    //         }
+    //         else {
+    //             setDisplayName(" ")
+
+    //             dispatch(REMOVE_ACTIVE_USER());
+    //         }
+    //     })
+    // }, [displayName])
 
 
     // --------------------Redux-------------------//
@@ -222,21 +240,14 @@ const Navbar = () => {
 
                         <HideLink>
                             <h1>
-                                <MotionText logo={displayName === null ? '' : `Hi | ${displayName}`} />
+                                <MotionText logo={currentUser ? `Hi ${currentUser.displayName}`: ''} />
                             </h1>
                         </HideLink>
                         <button className={styles.btn_profile} onClick={ProfileHandler} >
-                            {
-                                photoURL === null ? <img
-                                    src={userImg}
-                                    alt="person" />
-                                    :
-                                    <img
-                                        src={photoURL}
-                                        alt="person"
-                                    />
-
+                            {                                
+                                <img src={currentUser ? currentUser.photoURL : userImg} alt="" />
                             }
+                            
 
                         </button>
                         {/* -----------Authentication------------ */}

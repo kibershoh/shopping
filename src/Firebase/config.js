@@ -4,12 +4,22 @@ import {getFirestore} from "firebase/firestore"
 import {getStorage} from "firebase/storage"
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyBIr-FA-_IQFBdJpAlJyr3Qtox2Id8MJRQ",
+
+  // ~~~~~~~~~~~~~~~ saminovoybek563@gmail.com ~~~~~~~~~~~~~~~~~~~//
+ apiKey: "AIzaSyBIr-FA-_IQFBdJpAlJyr3Qtox2Id8MJRQ",
   authDomain: "shopping-791be.firebaseapp.com",
   projectId: "shopping-791be",
   storageBucket: "shopping-791be.appspot.com",
   messagingSenderId: "313102473698",
   appId: "1:313102473698:web:4fff9c6d31f1c7680201bb"
+
+// ~~~~~~~~ Team accauntniki~~~~~~~~~~~~//
+// apiKey: "AIzaSyDTIhnGvV3nvIDFTk9Bor0t6j66a0kE7o8",
+//   authDomain: "shopping-4a8d6.firebaseapp.com",
+//   projectId: "shopping-4a8d6",
+//   storageBucket: "shopping-4a8d6.appspot.com",
+//   messagingSenderId: "493510002186",
+//   appId: "1:493510002186:web:d52bfd301625666d5b81f3"
 };
 
 const app = initializeApp(firebaseConfig);

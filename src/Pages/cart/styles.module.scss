@@ -1,5 +1,4 @@
 .cart {
-
     width: 100%;
     display: flex;
     align-items: start;
@@ -9,8 +8,7 @@
     padding-top: 80px;
 
     @media (max-width: '1170px') {
-        flex-wrap: wrap;
-        ;
+        flex-wrap: wrap;        
         align-items: center;
         margin-top: 20px;
 
@@ -25,7 +23,6 @@
         position: fixed;
         right: 0;
         top: 70px;
-        // margin-left: 40px;
         width: 33%;
         z-index: 31;
         border-radius: 5px;

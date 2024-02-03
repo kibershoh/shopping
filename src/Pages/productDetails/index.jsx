@@ -34,12 +34,12 @@ const ProductDetails = () => {
     const [name, setName] = useState('')
     const [message, setMessage] = useState('')
     const [tab, setTab] = useState('desc')
-    
-    
+
+
     const product = products.find(item => item.id === id)
     const { imgUrl, productName, price, avgRating, reviews, description, shortDesc, category } = product;
     const categoryData = products.filter((item) => item.category === category)
-   
+
     const labels = {
         0.5: 'Uselkjm',
         1: 'Useless+',
@@ -56,46 +56,46 @@ const ProductDetails = () => {
     // ----------Stars-----------//
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(-1);
-        let text = ''   
+    let text = ''
 
-        // -------Rewiews----------//
+    // -------Rewiews----------//
     const rewiewUser = useRef('')
     const reviewMsg = useRef('')
     const dispatch = useDispatch()
 
 
-// -------------Functions---------//
+    // -------------Functions---------//
     const submitHandler = (e) => {
         e.preventDefault()
-       
-     const reviewUserName = rewiewUser.current.value;
+
+        const reviewUserName = rewiewUser.current.value;
         const reviewUserMsg = reviewMsg.current.value;
 
         switch (rating) {
             case 0.5: text = labels['0.5']
                 break;
-            case 1: text=labels[1]
+            case 1: text = labels[1]
                 break;
-            case 1.5: text=labels['1.5']
+            case 1.5: text = labels['1.5']
                 break;
-            case 2: text=labels['2']
+            case 2: text = labels['2']
                 break;
-            case 2.5: text=labels['2.5']
+            case 2.5: text = labels['2.5']
                 break;
-            case 3: text=labels['3']
+            case 3: text = labels['3']
                 break;
-            case 3.5: text=labels['3.5']
+            case 3.5: text = labels['3.5']
                 break;
-            case 4: text=labels['4']
+            case 4: text = labels['4']
                 break;
-            case 4.5: text=labels['4.5']
+            case 4.5: text = labels['4.5']
                 break;
-            case 5: text=labels['5']
+            case 5: text = labels['5']
                 break;
-            default: text=' '
+            default: text = ' '
 
         }
-         
+
         const rewiewArr = {
             userName: reviewUserName,
             text: reviewUserMsg,
@@ -167,6 +167,8 @@ const ProductDetails = () => {
                             </div>
                         </div>
                         <div className={styles.send_message}>
+
+
                             <form onSubmit={submitHandler}>
 
                                 <div className={styles.send_msg}>
@@ -192,7 +194,6 @@ const ProductDetails = () => {
                                 </div>
                                 <div>
                                     <label className={styles.rate}>Rate our product</label>
-
                                     <div className={styles.stars}>
                                         <Rating
                                             name="hover-feedback"
@@ -220,14 +221,11 @@ const ProductDetails = () => {
 
 
                             </form>
+
+
                         </div>
                     </div>
                 </div>
-
-
-
-
-
 
             </div>
             <div>

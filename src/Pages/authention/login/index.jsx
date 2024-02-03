@@ -21,33 +21,50 @@ const Login = () => {
     const [password, setPassword] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const navigate = useNavigate();
-
+    
     //  ------------------ Functions ------------------ //
-    const loginUser = (e) => {
+    // const loginUser = (e) => {
+    //     e.preventDefault()
+    //     setIsLoading(true)
+    //     signInWithEmailAndPassword(auth, email, password)
+    //         .then((userCredential) => {
+    //             // const user = userCredential.user;
+
+    //             setIsLoading(false)
+    //             toast.success("Login Successfull...")
+    //             navigate('/')
+    //         })
+    //         .catch((error) => {
+    //             setIsLoading(false)
+
+
+
+
+    //         })
+    // }
+    const loginUser = async (e)=>{
         e.preventDefault()
         setIsLoading(true)
-        signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                // const user = userCredential.user;
 
-                setIsLoading(false)
-                toast.success("Login Successfull...")
-                navigate('/')
-            })
-            .catch((error) => {
-                setIsLoading(false)
+        try{
+            const userCredential = await signInWithEmailAndPassword(auth,email,password)
+            const user = userCredential.user
+            console.log(user);
+            setIsLoading(false)
+            toast.success("Successfully logged in ")
+            navigate('/checkout')
+        }catch(error){
+            setIsLoading(false)
+            toast.error(error.message)
+        }
 
-
-
-
-            })
     }
     // -------------------- Login With Google-------------//
     const provider = new GoogleAuthProvider();
     const signInWithGoogle = () => {
         signInWithPopup(auth, provider)
             .then((result) => {
-                // const user = result.user;
+                const user = result.user;
             }).catch((error) => {
             })
     }
@@ -57,32 +74,36 @@ const Login = () => {
 
             <div className={styles.login}>
                 <form onSubmit={loginUser}>
+                <h1 className={styles.title}>Login</h1>
 
                     <div>
-                        <label>Your Email</label>
+                        
                         <input
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             type='email' placeholder='Your Email'
+                            required
                         />
+                        <label>Your Email</label>
                     </div>
                     <div>
-                        <label>Password</label>
+                        
                         <input
+                        required
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
 
                             type='password' placeholder='Password'
                         />
+                        <label>Password</label>
                     </div>
 
                     <button className={styles.login_btn} type="submit">
                         Login
                     </button>
-                    <Link to={'/reset'}>Reset password</Link>
-                    <p>-- or --</p>
+                    <Link className={styles.reset_btn} to={'/reset'}>Reset password</Link>
                     
-                    <p>Don't have an account? <Link to={'/register'}> Register</Link></p>
+                    <p>Don't have an account? <Link to={'/register'}> Create account</Link></p>
 
                 </form>
             </div>
@@ -93,3 +114,4 @@ const Login = () => {
 }
 
 export default Login;
+ 

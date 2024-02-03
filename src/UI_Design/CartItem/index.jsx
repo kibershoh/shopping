@@ -28,7 +28,7 @@ const CartItem = ({item,number}) => {
   return (
      <tr>
             <td>
-              <p>{number+1} {item.added ? 'b' : 'd'}</p>
+              <p>{number+1} </p>
             </td>
             <td>
               <img src={item.image} alt="" />

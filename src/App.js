@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
 import {Footer, Navbar} from './Components/index';
 import { Route, Routes } from 'react-router-dom';
-import {Admin, Cart, Contact, Home, OrderHistory,Login,Register, Reset, Shop} from './Pages/index';
+import {Admin, Cart, Contact, Home, OrderHistory,Login,Register, Reset, Shop, Checkout} from './Pages/index';
  import { ToastContainer, } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ProductDetails from './Pages/productDetails';
-function App() {
-  
-   
-
-   
-
+import ProtectedRoute from './ProtectedRoute';
+function App() {   
+ 
   return (
     <>
     <ToastContainer
@@ -26,7 +23,9 @@ function App() {
       <Route path='/shop' element={<Shop/>}/>
       <Route path='/shop/:id' element={<ProductDetails/>}/>
       <Route path='/contact' element={<Contact/>}/>
-      <Route path='/orderhistory' element={<OrderHistory/>}/>
+      <Route path='/checkout' element={<ProtectedRoute>
+        <Checkout/>
+      </ProtectedRoute>}/>
       <Route path='/admin' element={<Admin/>}/>
       <Route path='/login' element={<Login/>}/>
       <Route path='/register' element={<Register/>}/>

@@ -22,7 +22,15 @@ const ProductCard = ({ item }) => {
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  // const [added, setAdded] = useState(false)
+  const [added, setAdded] = useState(false)
+  const active = ()=>{
+    if(item.action){
+      setAdded(false)
+    }
+    else{
+      setAdded(true)
+    }
+  }
   const addToCart = () => {
     dispatch(
       cartActions.addProduct({
@@ -30,11 +38,12 @@ const ProductCard = ({ item }) => {
         productName: item.productName,
         price: item.price,
         image: item.imgUrl,
-       
-        
-
+        action: item.action,     
       })
-    )  
+    ) 
+    active() 
+     
+    
   }
 
   const toDetails = (id) => {
@@ -62,14 +71,16 @@ const ProductCard = ({ item }) => {
       <div className={styles.product_add}>
         <motion.button onClick={addToCart} whileHover={{ scale: 1.09 }} className={styles.product_btn}>
           <div className={styles.button_wrapper}>
+           
             <div className={styles.text}>
+              
               {
-                item.added ? 'Added' : 'Buy Now'
+                added ? 'Added' : 'Buy Now'
               }
             </div>
             <span className={styles.icon}>
               {
-                item.added ? 'Added' : <BsCartPlus />
+                added ? 'Added' : <BsCartPlus />
               }
             </span>
           </div></motion.button>

@@ -1,6 +1,6 @@
 // Routes and React library
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 // Styles library
 import styles from '../login/style.module.scss'
@@ -17,11 +17,11 @@ const Reset = () => {
     const [email, setEmail] = useState('')
     const [isLoading, setIsLoading] = useState(false)
 
+    
     // ---------Functions ------ Reset password //   
     const resetPassword = (e) => {
         e.preventDefault()
-        setIsLoading(true)
-
+        setIsLoading(true)        
         sendPasswordResetEmail(auth, email)
             .then(() => {
                 setIsLoading(false)
@@ -33,20 +33,25 @@ const Reset = () => {
             })
     }
 
+
+
+
     return (
         <>
         {isLoading && <Loader/>}
             <div className={styles.login}>
                 <form onSubmit={resetPassword}>
                     <div>
-                        <label> Your Email</label>
+                        <label> You Email</label>
                         <input
+                        required
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
 
                             type='email' placeholder='Email'
                         />
                     </div>
+                     
                     
                     <button className={styles.login_btn} type="submit">
                         Reset Password

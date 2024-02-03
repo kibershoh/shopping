@@ -1,10 +1,11 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { selectIsLoading } from '../../Redux/slice/authSlice'
+import UseAuth from '../../Custom Hooks/UseAuth'
 
 const HideLink = ({ children }) => {
-  const isLoggedIn = useSelector(selectIsLoading)
-  if (isLoggedIn) {
+  const {currentUser} = UseAuth()
+  if (currentUser) {
     return children
   }
 
@@ -12,8 +13,8 @@ const HideLink = ({ children }) => {
 }
 
 export const ShowOnLogout = ({ children }) => {
-  const isLoggedIn = useSelector(selectIsLoading)
-  if (!isLoggedIn) {
+  const {currentUser} = UseAuth()
+  if (!currentUser) {
     return children;
   }
 
@@ -22,3 +23,19 @@ export const ShowOnLogout = ({ children }) => {
 }
 
 export default HideLink
+// import React from 'react'
+
+// export const HideLink = () => {
+//   return (
+//     <div>HideLink</div>
+//   )
+// }
+
+
+// const ShowOnLogout = () => {
+//   return (
+//     <div>ShowOnLogout</div>
+//   )
+// }
+
+// export default ShowOnLogout

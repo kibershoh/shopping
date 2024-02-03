@@ -1,74 +1,128 @@
 // ------------Routes and React library------------//
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+
+// ------------Styles library-------------//
+import { MdAddAPhoto } from "react-icons/md";
 
 // ------------Styles library-------------//
 import styles from '../login/style.module.scss'
 import { toast } from 'react-toastify';
 
 // ------------Firebase library-------------//
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../../Firebase/config';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { auth, db, storage } from '../../../Firebase/config';
 import { Loader } from '../../../Components';
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import { doc, setDoc } from 'firebase/firestore';
 
 
 
 
 
 const Register = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [isLoading, setLoading] = useState(false)
-const navigate = useNavigate()
-  const registerUser = (e) => {
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [username, setUsername] = useState("")
+  const [loading, setLoading] = useState(false)
+  const [fileUrl, setFileUrl] = useState(null)
+  const [photoName, setPhotoName] = useState(null)
+  const navigate = useNavigate()
+  const registerUser = async (e) => {
     e.preventDefault()
-    if (password !== confirmPassword) {
-      toast.error("Password do not match.")
-
-    }
     setLoading(true)
-    createUserWithEmailAndPassword(auth,email,password)
-    .then((userCredential)=>{
-      const user = userCredential.user
-      setLoading(false)
-      toast.success("Registeration SUccessfull...")
-      navigate('/login')
 
-    })
-    .catch((error)=>{
-             toast.error(error.message)
+    // ~~~~~~~~~~with try catch ~~~~~~~~~~~~~//
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      const date = Date.now();
+
+      const storageRef = ref(storage, `${username / date}`);
+      const UploadTask = uploadBytesResumable(storageRef, fileUrl);
+
+      UploadTask.on(() => {
+        toast.error('jhgcfxdgchbjknm')
+      },
+
+        async () => {
+          try {
+            const downloadUrl = await getDownloadURL(UploadTask.snapshot.ref);
+
+            await updateProfile(user, {
+              displayName: username,
+              photoURL: downloadUrl,
+            });
+
+            await setDoc(doc(db, `${username}`, user.uid), {
+              uid: user.uid,
+              displayName: username,
+              email,
+              photoURL: downloadUrl,
+            });
+            navigate('/login')
+          } catch (error) {
+
+          }
+
+        }
+
+      );
       setLoading(false)
-    })
+      toast.success('Accaunt created')
+    } catch (error) {
+      setLoading(false)
+      toast.error('Bitta narsada oxirida');
+      console.error(error);
+    }
+
   }
+  const fileInputRef = useRef(null);
+
+  const actives = () => {
+    fileInputRef.current.click();
+  };
   return (
     <>
-           {isLoading && <Loader/>}
+      {loading && <Loader />}
 
       <div className={styles.login}>
         <form onSubmit={registerUser}>
-
+          <h1 className={styles.title}>Register</h1>
           <div>
-            <label>Your Email</label>
+            <input
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+
+              type='text'
+              placeholder='Username'
+            />
+            <label>Username</label>
+          </div>
+          <div>
             <input
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-
-              type='email' placeholder='Your Email'
+              type='email'
+              placeholder='Your Email'
             />
+            <label>Your Email</label>
           </div>
           <div>
-            <label>Password</label>
             <input
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-
-              type='password' placeholder='Password'
+              type='password'
+              placeholder='Password'
             />
+            <label>Password</label>
           </div>
-          <div>
+          {/* <div>
             <label>Confirm Password</label>
             <input
               value={confirmPassword}
@@ -77,6 +131,22 @@ const navigate = useNavigate()
 
               type='password' placeholder='Confirm Password'
             />
+          </div> */}
+          <div className={styles.file_input}>
+            <h2 className={styles.choose_file} onClick={actives}>
+              <MdAddAPhoto size={28} className={styles.camera} />
+              <p>Download Photo</p>
+            </h2>
+            <input
+             
+              ref={fileInputRef}
+              onChange={(e) => {
+                setFileUrl(e.target.files[0])
+                
+              }}
+              type='file'
+            />
+            
           </div>
 
           <button className={styles.login_btn} type="submit">

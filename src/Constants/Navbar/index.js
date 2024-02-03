@@ -13,12 +13,7 @@ export const navLinks = [
     path: '/shop',
     icon: RiMenu2Fill,
   },
-  {
-    id: 2,
-    title: "Cart",
-    path: '/cart',
-    icon: RiMenu2Fill,
-  },
+  
   
   
 

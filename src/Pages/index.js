@@ -7,4 +7,5 @@ export {default as Login} from './authention/login'
 export {default as Register} from './authention/register'
 export {default as Reset} from './authention/reset'
 export {default as Shop} from './shop'
+export {default as Checkout} from './checkout'
  

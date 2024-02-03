@@ -45,6 +45,7 @@ const products = [
     imgUrl: mouse01,
     category: "mouse",
     price: 193,
+    action:false,
     shortDesc:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur iure quas illo voluptates labore tempore!",
     description:
