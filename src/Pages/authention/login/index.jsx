@@ -37,30 +37,18 @@ const Login = () => {
             navigate('/checkout')
         } catch (error) {
             setIsLoading(false)
-            // toast.error(error.message)
+            toast.error(error.message)
         }
 
     }
     // -------------------- Login With Google-------------//
-
-    const signInWithGoogle = () => {
-        const provider = new GoogleAuthProvider();
-        signInWithPopup(auth, provider)
-            .then((result) => {
-                const credential = GoogleAuthProvider.credentialFromResult(result);
-                const token = credential.accessToken;
-                const user = result.user;
-                navigate('/')
-            }).catch((error) => {
-
-            });
-    }
+     
     return (
         <>
             {isLoading && <Loader />}
 
             <div className={styles.login}>
-                <form>
+                <form onSubmit={loginUser}>
                     <h1 className={styles.title}>Login</h1>
 
                     <div>
@@ -85,10 +73,9 @@ const Login = () => {
                         <label>Password</label>
                     </div>
 
-                    <button onClick={loginUser} className={styles.login_btn}>
+                    <button type="submit" className={styles.login_btn}>
                         Login
                     </button>
-                    <h1 onClick={signInWithGoogle} className={styles.with_google}><FcGoogle size={26} /></h1>
                     <Link className={styles.reset_btn} to={'/reset'}>Reset password</Link>
 
                     <p>Don't have an account? <Link to={'/register'}> Create account</Link></p>
