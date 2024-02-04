@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 // Image
-import googleIcon from '../../../assets/google.png'
+import { FcGoogle } from "react-icons/fc";
 
 // Styles library
 import { toast } from 'react-toastify'
@@ -23,25 +23,7 @@ const Login = () => {
     const navigate = useNavigate();
 
     //  ------------------ Functions ------------------ //
-    // const loginUser = (e) => {
-    //     e.preventDefault()
-    //     setIsLoading(true)
-    //     signInWithEmailAndPassword(auth, email, password)
-    //         .then((userCredential) => {
-    //             // const user = userCredential.user;
-
-    //             setIsLoading(false)
-    //             toast.success("Login Successfull...")
-    //             navigate('/')
-    //         })
-    //         .catch((error) => {
-    //             setIsLoading(false)
-
-
-
-
-    //         })
-    // }
+   
     const loginUser = async (e) => {
         e.preventDefault()
         setIsLoading(true)
@@ -55,18 +37,23 @@ const Login = () => {
             navigate('/checkout')
         } catch (error) {
             setIsLoading(false)
-            toast.error(error.message)
+            // toast.error(error.message)
         }
 
     }
     // -------------------- Login With Google-------------//
-    const provider = new GoogleAuthProvider();
+
     const signInWithGoogle = () => {
+        const provider = new GoogleAuthProvider();
         signInWithPopup(auth, provider)
             .then((result) => {
+                const credential = GoogleAuthProvider.credentialFromResult(result);
+                const token = credential.accessToken;
                 const user = result.user;
+                navigate('/')
             }).catch((error) => {
-            })
+
+            });
     }
     return (
         <>
@@ -86,7 +73,7 @@ const Login = () => {
                         />
                         <label>Your Email</label>
                     </div>
-                    
+
                     <div>
                         <input
                             required
@@ -101,6 +88,7 @@ const Login = () => {
                     <button className={styles.login_btn} type="submit">
                         Login
                     </button>
+                    <button onClick={signInWithGoogle} className={styles.with_google}><FcGoogle size={26} /></button>
                     <Link className={styles.reset_btn} to={'/reset'}>Reset password</Link>
 
                     <p>Don't have an account? <Link to={'/register'}> Create account</Link></p>

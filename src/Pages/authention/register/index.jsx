@@ -34,7 +34,9 @@ const Register = () => {
 
     // ~~~~~~~~~~with try catch ~~~~~~~~~~~~~//
 
-    try {
+   if(fileUrl!==null){
+    
+     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       const date = Date.now();
@@ -77,6 +79,11 @@ const Register = () => {
       console.error(error);
     }
 
+   }
+   else{
+    setLoading(false)
+    toast.error("Qaysidir maydon bo'sh iltimos toldiring")
+   }
   }
   
 

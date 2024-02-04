@@ -240,6 +240,19 @@
             }
         }
 
+        .with_google {
+            background-color: transparent;
+            border: none;
+            width: 100%;
+            display: block;
+            text-align: right;
+            &:hover{
+                transition: all .4s;
+                transform: scale(1.04);
+                
+            }
+        }
+
         p {
             color: #fff;
             font-size: 18px;
