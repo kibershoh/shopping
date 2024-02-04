@@ -60,7 +60,7 @@ const Login = () => {
             {isLoading && <Loader />}
 
             <div className={styles.login}>
-                <form onSubmit={loginUser}>
+                <form>
                     <h1 className={styles.title}>Login</h1>
 
                     <div>
@@ -85,7 +85,7 @@ const Login = () => {
                         <label>Password</label>
                     </div>
 
-                    <button className={styles.login_btn} type="submit">
+                    <button onClick={loginUser} className={styles.login_btn}>
                         Login
                     </button>
                     <h1 onClick={signInWithGoogle} className={styles.with_google}><FcGoogle size={26} /></h1>
