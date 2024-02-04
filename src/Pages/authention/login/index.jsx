@@ -88,7 +88,7 @@ const Login = () => {
                     <button className={styles.login_btn} type="submit">
                         Login
                     </button>
-                    <button onClick={signInWithGoogle} className={styles.with_google}><FcGoogle size={26} /></button>
+                    <h1 onClick={signInWithGoogle} className={styles.with_google}><FcGoogle size={26} /></h1>
                     <Link className={styles.reset_btn} to={'/reset'}>Reset password</Link>
 
                     <p>Don't have an account? <Link to={'/register'}> Create account</Link></p>
