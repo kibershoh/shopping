@@ -15,6 +15,7 @@ import { auth, db, storage } from '../../../Firebase/config';
 import { Loader } from '../../../Components';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { doc, setDoc } from 'firebase/firestore';
+import DownloadPhoto from '../../../UI_Design/DownloadPhoto';
 
 
 
@@ -27,69 +28,69 @@ const Register = () => {
   const [loading, setLoading] = useState(false)
   const [fileUrl, setFileUrl] = useState(null)
   const navigate = useNavigate()
-  const fileInputRef = useRef(null);
   const registerUser = async (e) => {
     e.preventDefault()
     setLoading(true)
 
     // ~~~~~~~~~~with try catch ~~~~~~~~~~~~~//
 
-   if(fileUrl!==null){
-    
-     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-      const date = Date.now();
+    if (fileUrl !== null) {
 
-      const storageRef = ref(storage, `${username / date}`);
-      const UploadTask = uploadBytesResumable(storageRef, fileUrl);
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
 
-      UploadTask.on(() => {
-        toast.error('jhgcfxdgchbjknm')
-      },
+        const storageRef = ref(storage, `images/${Date.now() + username}`);
+        const UploadTask = uploadBytesResumable(storageRef, fileUrl);
 
-        async () => {
-          try {
-            const downloadUrl = await getDownloadURL(UploadTask.snapshot.ref);
+        UploadTask.on(() => {
+          toast.error('Error')
+        },
 
-            await updateProfile(user, {
-              displayName: username,
-              photoURL: downloadUrl,
-            });
+          async () => {
+            try {
+              const downloadUrl = await getDownloadURL(UploadTask.snapshot.ref);
 
-            await setDoc(doc(db, `${username}`, user.uid), {
-              uid: user.uid,
-              displayName: username,
-              email,
-              photoURL: downloadUrl,
-            });
-            navigate('/login')
-          } catch (error) {
+              await updateProfile(user, {
+                displayName: username,
+                photoURL: downloadUrl,
+              });
+
+              await setDoc(doc(db, "users", user.uid), {
+                uid: user.uid,
+                displayName: username,
+                email,
+                photoURL: downloadUrl,
+              });
+            } catch (error) {
+
+            }
 
           }
 
-        }
+        );
+        setLoading(false)
+        navigate('/login')
 
-      );
-      setLoading(false)
-      toast.success('Accaunt created')
-    } catch (error) {
-      setLoading(false)
-      toast.error('Bitta narsada oxirida');
-      console.error(error);
+        toast.success('Accaunt created')
+      } catch (error) {
+        setLoading(false)
+        toast.error('Bitta narsada oxirida');
+        console.error(error);
+      }
+
     }
-
-   }
-   else{
-    setLoading(false)
-    toast.error("Qaysidir maydon bo'sh iltimos toldiring")
-   }
+    else {
+      setLoading(false)
+      toast.error("Qaysidir maydon bo'sh iltimos toldiring")
+    }
   }
-  
 
+  const fileInputRef = useRef(null);
   const actives = () => {
     fileInputRef.current.click();
   };
+
   return (
     <>
       {loading && <Loader />}
@@ -98,7 +99,7 @@ const Register = () => {
         <form onSubmit={registerUser}>
           <h1 className={styles.title}>Register</h1>
 
-          <div>
+          <div className={styles.input_div}>
             <input
               value={username}
               onChange={(e) => setUsername(e.target.value)}
@@ -110,7 +111,7 @@ const Register = () => {
             <label>Username</label>
           </div>
 
-          <div>
+          <div className={styles.input_div}>
             <input
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -120,8 +121,8 @@ const Register = () => {
             />
             <label>Your Email</label>
           </div>
-          
-          <div>
+
+          <div className={styles.input_div}>
             <input
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -133,24 +134,19 @@ const Register = () => {
           </div>
 
           <div className={styles.file_input}>
-            <h2 className={styles.choose_file} onClick={actives}>
-              <MdAddAPhoto className={styles.camera} />
-              <p>Download Photo</p>
-            </h2>
-            <input
-
-              ref={fileInputRef}
+            <div className={styles.choose_file} onClick={actives}>
+              <MdAddAPhoto size={25} className={styles.camera} />
+              <span>Download Photo</span>
+            </div>
+            <input ref={fileInputRef}
               onChange={(e) => {
                 setFileUrl(e.target.files[0])
-
               }}
               type='file'
             />
 
           </div>
 
-         
-         
           <button className={styles.login_btn} type="submit">
             Register
           </button>

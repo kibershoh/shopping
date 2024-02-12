@@ -42,7 +42,7 @@ const Reset = () => {
             <div className={styles.login}>
                 <form onSubmit={resetPassword}>
 
-                    <div>
+                    <div className={styles.input_div}>
                         <input
                             required
                             value={email}

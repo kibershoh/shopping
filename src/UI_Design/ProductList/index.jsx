@@ -6,7 +6,7 @@ const ProductList = ({data}) => {
     <div className={styles.product_list}>
         {
          data?.map((item,index)=>(
-            <ProductCard item={item} key={index}/>
+            <ProductCard item={item} index={index} key={index}/>
          ))
         }
     </div>

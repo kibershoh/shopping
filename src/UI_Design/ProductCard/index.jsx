@@ -16,10 +16,12 @@ import { LuPlus } from "react-icons/lu";
 import { cartActions } from '../../Redux/slice/cartSlice';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import useGetData from '../../Custom Hooks/UseGetData';
+import CardLoader from '../../Constants/LoaderCard';
 
-const ProductCard = ({ item }) => {
+const ProductCard = ({ item ,index}) => {
   const productItems = useSelector(state => state.cart.cartItems)
-
+ const {data:products,loading} = useGetData("products")
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [added, setAdded] = useState(false)
@@ -35,10 +37,9 @@ const ProductCard = ({ item }) => {
     dispatch(
       cartActions.addProduct({
         id: item.id,
-        productName: item.productName,
+        name: item.name,
         price: item.price,
-        image: item.imgUrl,
-        action: item.action,     
+        downloadURL: item.downloadURL,
       })
     ) 
     active() 
@@ -51,19 +52,23 @@ const ProductCard = ({ item }) => {
   }
 
   return (
-    <div className={styles.product_item}>
+    <>
+    {
+      (loading && !window.navigator.onLine) ? <CardLoader/> :
+      (
+        <div className={styles.product_item}>
       <motion.button whileHover={{ scale: 1.1 }} className={styles.like_btn}>
         <FiHeart size={25} />
       </motion.button>
 
       <div className={styles.product_img}>
         <a href="#shop_detail">
-          <motion.img onClick={() => toDetails(item.id)} whileHover={{ scale: 0.8 }} src={item.imgUrl} alt="" />
+          <motion.img onClick={() => toDetails(item.ID)} whileHover={{ scale: 0.8 }} src={item.downloadURL} alt="" />
 
         </a>
       </div>
       <div className={styles.name_price}>
-        <h3>{item.productName}</h3>
+        <h3>{item.name}</h3>
 
 
       </div>
@@ -88,6 +93,9 @@ const ProductCard = ({ item }) => {
 
       </div>
     </div>
+      )
+    }
+    </>
   )
 }
 

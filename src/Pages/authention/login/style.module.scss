@@ -39,7 +39,7 @@
         }
 
         // ~~~~~~~~~~~~~~~~~~~~
-        div {
+        .input_div {
             position: relative;
             padding-top: 20px;
             margin: 25px 0;
@@ -114,7 +114,8 @@
 
         }
 
-        .file_input {
+        .file_input {  
+  
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -129,6 +130,7 @@
                 padding-left: 30px;
                 width: 60%;
                 border: none;
+                color: #fff;
 
                 @media (max-width: '510px') {
                     width: 100%;
@@ -137,10 +139,7 @@
 
                 }
             }
-
-        }
-
-        .choose_file {
+             .choose_file {
             width: 180px;
             height: 40px;
             border-radius: 5px;
@@ -153,25 +152,12 @@
             justify-content: space-between;
             background-color: transparent;
 
-            p {
-                font-size: 15px;
+            span {
+                font-size: 17px;
 
             }
 
-            .camera {
-                // margin-right: 15px;
-                width: 35px;
-
-                // @media (max-width: '500px') {
-                //     // margin-right: 5px;
-                //     width: 20px;
-                // }
-
-                &:hover {
-                    transition: all .3s;
-
-                }
-            }
+             
 
             &:hover {
                 transition: all .4s;
@@ -185,6 +171,10 @@
                 }
             }
         }
+
+        }
+
+       
 
         .login_btn {
             width: 100%;

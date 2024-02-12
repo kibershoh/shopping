@@ -1,33 +1,36 @@
 import React, { useEffect, useState } from 'react'
 import Slider from '../../Components/Slider'
 import { Services, Timer } from '../../Components'
-import products from '../../Constants/data/products'
+// import products from '../../Constants/data/products'
 import styles from './styles.module.scss'
 import { ProductList } from '../../UI_Design'
+import useGetData from '../../Custom Hooks/UseGetData'
+
 const Home = () => {
-  const [micraphone, setMicraphone] = useState([])
-  const [headphones, setHeadphones] = useState([])
-  const [wireless, setWireless] = useState([])
-  const [mobile, setMobile] = useState([])
-  const [guitar, setGuitar] = useState([])
-  const [watches, setWatches] = useState([])
+   const {data:products,loading} = useGetData("products")
+  const [micraphone, setMicraphone] = useState(null)
+  const [headphones, setHeadphones] = useState(null)
+  const [wireless, setWireless] = useState(null)
+  const [mobile, setMobile] = useState(null)
+  const [guitar, setGuitar] = useState(null)
+  const [watches, setWatches] = useState(null)
   useEffect(() => {
-    const filteredPopular = products.filter(
+    const filteredPopular = products?.filter(
       (item) => item.category === 'micraphone'
     )
-    const filteredBest = products.filter(
+    const filteredBest = products?.filter(
       (item) => item.category === 'mouse'
     )
-    const filteredwireless = products.filter(
+    const filteredwireless = products?.filter(
       (item) => item.category === 'wireless'
     )
-    const filteredmobile = products.filter(
+    const filteredmobile = products?.filter(
       (item) => item.category === 'mobile'
     )
-    const filteredwatches = products.filter(
+    const filteredwatches = products?.filter(
       (item) => item.category === 'watch'
     )
-    const filteredGuitar = products.filter(
+    const filteredGuitar = products?.filter(
       (item) => item.category === 'guitar'
     )
     setMicraphone(filteredPopular)
@@ -36,7 +39,7 @@ const Home = () => {
     setMobile(filteredmobile)
     setWatches(filteredwatches)
     setGuitar(filteredGuitar)
-  }, [])
+  }, [products])
 
 
   return (

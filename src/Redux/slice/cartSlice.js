@@ -91,15 +91,15 @@ const cartSlice = createSlice({
             if (!existingItem) {
                 state.cartItems.push({
                     id: newItem.id,
-                    productName: newItem.productName,
-                    image: newItem.image,
+                    name: newItem.name,
+                    downloadURL: newItem.downloadURL,
                     price: newItem.price,
                     quantity: 1,
                     totalPrice: newItem.price,
                     added: false,
                 });
                 state.totalQuantity++;
-                state.totalAmout += newItem.price;
+                state.totalAmout += Number(newItem.price);
                 state.cartItems.map((item)=>{
                     item.added = !newItem.action
                     

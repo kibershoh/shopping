@@ -34,7 +34,7 @@ const Login = () => {
             console.log(user);
             setIsLoading(false)
             toast.success("Successfully logged in ")
-            navigate('/checkout')
+            navigate('/')
         } catch (error) {
             setIsLoading(false)
             toast.error(error.message)
@@ -51,7 +51,7 @@ const Login = () => {
                 <form onSubmit={loginUser}>
                     <h1 className={styles.title}>Login</h1>
 
-                    <div>
+                    <div className={styles.input_div}>
 
                         <input
                             value={email}
@@ -62,7 +62,7 @@ const Login = () => {
                         <label>Your Email</label>
                     </div>
 
-                    <div>
+                    <div className={styles.input_div}>
                         <input
                             required
                             value={password}

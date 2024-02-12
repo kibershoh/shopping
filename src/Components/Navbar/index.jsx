@@ -11,7 +11,7 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 
 //----------------Files---------------- //
 
-import navLinks from "../../Constants/Navbar";
+import navLinks from "../../Constants/NavbarItems";
 import userImg from '../../assets/loginn.png'
 import logout from '../../assets/logoutt.png'
 import styles from './style.module.scss'

@@ -10,89 +10,86 @@ import { ProductList } from '../../UI_Design';
 import styles from './styles.module.scss'
 
 // ~~~~~~~~~Data~~~~~~~~~~//
-import products from '../../Constants/data/products'
+// import products from '../../Constants/data/products'
+import Select from '../../UI_Design/SelectOption';
+import useGetData from '../../Custom Hooks/UseGetData';
+import CardLoader from '../../Constants/LoaderCard';
 
 const Shop = () => {
+  const {data:products,loading} = useGetData("products")
+  const [allProducts,setAllProducts] = useState(products)
   const [productsData,setProductsData] = useState(products)
+  const [inputText,setInputText] = useState('')
   const navigate = useNavigate()
+ 
   const handleFilter = (e)=>{
     const filterValue = e.target.value;
-    if(filterValue==='micraphone'){
+    if(filterValue==='all'){
+      
+      setProductsData(products)
+    }
+    else if(filterValue==='micraphone'){
       const filteredProducts = products.filter(
         (item)=>item.category === 'micraphone'
       )
       setProductsData(filteredProducts)
     }
-    if(filterValue==='mobile'){
+    else if(filterValue==='mobile'){
       const filteredProducts = products.filter(
         (item)=>item.category === 'mobile'
       )
       setProductsData(filteredProducts)
     }
-    if(filterValue==='mouse'){
+    else if(filterValue==='mouse'){
       const filteredProducts = products.filter(
         (item)=>item.category === 'mouse'
       )
       setProductsData(filteredProducts)
     }
-    if(filterValue==='wireless'){
+    else if(filterValue==='wireless'){
       const filteredProducts = products.filter(
         (item)=>item.category === 'wireless'
       )
       setProductsData(filteredProducts)
     }
-    if(filterValue==='watch'){
+    else if(filterValue==='watch'){
       const filteredProducts = products.filter(
         (item)=>item.category === 'watch'
       )
       setProductsData(filteredProducts)
     }
-    if(filterValue==='guitar'){
+    else if(filterValue==='guitar'){
       const filteredProducts = products.filter(
         (item)=>item.category === 'guitar'
       )
       setProductsData(filteredProducts)
     }
-    if(filterValue==='wireless'){
+    else if(filterValue==='wireless'){
       const filteredProducts = products.filter(
         (item)=>item.category === 'wireless'
       )
       setProductsData(filteredProducts)
     }
-  }  
-  const handSearch = (e)=>{
-    const searchTerm = e.target.value;
-    const searchedProducts = products.filter(item => item.productName.toLowerCase().includes(searchTerm.toLowerCase()))
-    setProductsData(searchedProducts)
+    
   } 
+   const handSearch = (e)=>{
+    const searchTerm = e.target.value;
+    setInputText(searchTerm)
+    const searchedProducts = products.filter(item => item.name.toLowerCase().includes(searchTerm))
+    setProductsData(searchedProducts)
+    
+  }  
+  
  
   return (
     <div className={styles.shop}>
       <TotalSection title={"Products"}/>
      <div className={styles.shop_header}>
        <div className={styles.filter_product}>
-        <select 
-        name="languages"
-      id="language-select"
-      onfocus="this.size=6;"
-      onblur="this.size=0;"
-      onchange="this.size=1; this.blur()"
-      onChange={handleFilter}
-        className={styles.category_select}>
-          <option>Filter By Category</option>
-          <option value="mobile">Phones</option>
-          <option value="micraphone">Micraphones</option>
-          <option value="mouse">Mouses</option>
-          <option value="guitar">Guitars</option>
-          <option value="wireless">Wireless</option>
-          <option value="watch">Watch</option>
-        </select>
-        <select className={styles.category_select}>
-          <option>Sort By</option>
-          <option value="ascending">Ascending</option>
-          <option value="descending">Descending</option>
-           
-        </select>
+       
+        <Select handleFilter={handleFilter}/>
+
+       
       </div>
       <div className={styles.search_product}>
         <MdOutlineSearch size={22} className={styles.search_icon}/>
@@ -102,11 +99,14 @@ const Shop = () => {
       </div>
      </div>
      <div>
+     
       {
-        productsData.length===0 ? <h1>No products are found!</h1>
-        :
-        <ProductList data={productsData}/>
-      }
+        (loading && window.navigator.onLine) ? <CardLoader/>:(
+
+          (productsData.length === 0 && inputText==='')  ? <ProductList data={products}/>:
+         ((productsData.length === 0 && inputText!=='')? <h1>Mavjud emas</h1>: <ProductList data={productsData}/>) 
+        )
+     }
      </div>
     </div>
   )

@@ -29,13 +29,13 @@ const Cart = () => {
                   <table>
                     <thead>
                       <tr>
-                        <th><TbNumber size={19} /> </th>
-                        <th>Image</th>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Total Price</th>
-                        <th>Delete</th>
+                        <th scope="col"><TbNumber size={19} /> </th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Total Price</th>
+                        <th scope="col">Delete</th>
                       </tr>
                     </thead>
                     <tbody>
