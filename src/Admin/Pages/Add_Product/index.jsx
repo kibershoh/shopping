@@ -115,6 +115,7 @@ const AddProduct = () => {
               description: description,
               category: category,
               price: price,
+              likeCount:[],
               reviews: [
                 {
                   rating: 4.8,
