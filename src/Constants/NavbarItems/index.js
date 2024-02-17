@@ -14,6 +14,13 @@ export const navLinks = [
     icon: RiMenu2Fill,
   },
   
+  {
+    id: 3,
+    title: "Dashboard",
+    path: '/dashboard',
+    icon: RiMenu2Fill,
+  },
+  
   
   
 
