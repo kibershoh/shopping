@@ -27,8 +27,9 @@ import { FaHeart } from 'react-icons/fa';
 // import    from '@mui/material/Modal';
 import { Box, Typography,Modal } from '@mui/material';
 import { CgClose } from 'react-icons/cg';
+import UseAuth from '../../Custom Hooks/UseAuth';
 const ProductCard = ({ item, index }) => {
-  let user = auth?.currentUser
+  const {currentUser} = UseAuth()
   const { idParams } = useParams()
   const { ID, id, name, price, downloadURL, category, reviews, likeCount } = item
   const productItems = useSelector(state => state.cart.cartItems)
@@ -69,13 +70,13 @@ const ProductCard = ({ item, index }) => {
   const docRef = doc(db, "products", id);
 
   async function likesHandler() {
-    if (user && likeCount !== undefined) {
-      let ind = tempLikeCount.indexOf(user?.displayName);
+    if (currentUser && likeCount !== undefined) {
+      let ind = tempLikeCount.indexOf(currentUser?.displayName);
       if (ind !== -1) {
         tempLikeCount.splice(ind, 1);
         setLikesNo((unLiked) => unLiked - 1);
       } else {
-        tempLikeCount.push(user?.displayName);
+        tempLikeCount.push(currentUser?.displayName);
         setLikesNo((liked) => liked + 1);
       }
 
@@ -123,9 +124,10 @@ const [comments, setComments] = useState([]);
   
 const postComment = async () => {
   try {
+    
    await  addDoc(collection(db, "products", id, "comments"), {
-      userName:user.displayName,
-      imgUrl:user.photoURL,
+      userName:currentUser.displayName,
+      imgUrl:currentUser.photoURL,
       text: commentText,
       timestamp: Timestamp.fromDate(new Date()),
       // timestamp: new Date(),
@@ -173,11 +175,11 @@ const postComment = async () => {
 
                <div>
                  {
-                  likeCount.indexOf(user?.displayName) != -1 ? (
+                  likeCount.indexOf(currentUser?.displayName) != -1 ? (
                     <motion.button  onClick={() => likesHandler(id)}> <motion.img whileHover={{ scale: 1.1 }} src={fillThumb} width='25px'  alt="" /> {likesNo} </motion.button>
                   )
                     :
-                    (user ? <motion.button whileHover={{ scale: 1.1 }}   onClick={() => likesHandler(id)}><img src={thumb}  width='25px' alt="" /> {likesNo}</motion.button>: <p>Likes {likesNo}</p>)
+                    (currentUser ? <motion.button whileHover={{ scale: 1.1 }}   onClick={() => likesHandler(id)}><img src={thumb}  width='25px' alt="" /> {likesNo}</motion.button>: <p>Likes {likesNo}</p>)
 
                 }
                 <motion.button whileHover={{ scale: 1.1 }}   onClick={handleOpen}>

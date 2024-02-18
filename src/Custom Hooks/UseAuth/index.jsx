@@ -14,7 +14,7 @@ const UseAuth = () => {
 
             }
         })
-    })
+    },[auth])
   return {
     currentUser,
   }
